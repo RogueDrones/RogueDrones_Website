@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rogue Drones - Mapping the Future</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles-new.css">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Updated script loading with loading=async parameter and marker libraries -->
+    <script>
+        // Load Maps API dynamically with proper async loading
+        function loadGoogleMapsApi() {
+            const script = document.createElement('script');
+            script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCkCfjNvZudhVc4uhIDurq-GIB8MzkP448&callback=initMap&loading=async&v=beta";
+            script.defer = true;
+            script.async = true;
+            script.onerror = function() {
+                console.error('Google Maps API failed to load');
+            };
+            document.head.appendChild(script);
+        }
+        // Call this once the DOM is fully loaded
+        window.addEventListener('DOMContentLoaded', loadGoogleMapsApi);
+    </script>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section id="hero" class="d-flex flex-column justify-content-center" style="background-image: url('images/home_image.JPG');">
+        <div class="container hero-content text-center text-white">
+            <img src="images/rogue_drones_white.png" alt="Rogue Drones Logo" class="mb-4 img-fluid hero-logo">
+            <h1 class="display-4 mb-3">Mapping the Future</h1>
+            <p class="lead mb-4">Affordable, reliable tech solutions for everyone.</p>
+            <a href="#contact" class="btn btn-primary btn-lg">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="section-title">Your World, Your Way</h2>
+                    <p class="lead">We specialise in providing high-quality, cost-effective websites and app building services. Whether you're a small business, a volunteer organisation, or an individual, we have the tools and expertise to help you map your world.</p>
+                    <p class="lead">At Rogue Drones, we believe that cutting-edge technology should be accessible to everyone. Our mission is to democratise access to tech systems and custom applications that can transform how you interact with your environment.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div id="map-container" class="google-earth-container rounded shadow-lg">
+                        <!-- Map will be loaded here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center text-white mb-5">Our Services</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-box bg-dark text-white p-4 mb-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-map-marked-alt fa-3x"></i>
+                        </div>
+                        <h3>Mapping & GIS Services</h3>
+                        <p>Affordable mapping solutions, from basic mapping to advanced GIS, to help you manage your environment.</p>
+                        <ul class="service-features">
+                            <li>Aerial photography & videography</li>
+                            <li>Topographic mapping</li>
+                            <li>3D terrain modeling</li>
+                            <li>GIS data collection & analysis</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-box bg-dark text-white p-4 mb-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-mobile-alt fa-3x"></i>
+                        </div>
+                        <h3>App Development</h3>
+                        <p>Custom app development crafted to streamline your workflow, delivering solutions without the high costs.</p>
+                        <ul class="service-features">
+                            <li>Mobile applications</li>
+                            <li>Data collection tools</li>
+                            <li>Custom GIS interfaces</li>
+                            <li>Workflow automation</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-box bg-dark text-white p-4 mb-4">
+                        <div class="service-icon mb-3">
+                            <i class="fas fa-headset fa-3x"></i>
+                        </div>
+                        <h3>Solutions & Support</h3>
+                        <p>Offering low-cost solutions and ongoing support to help you implement and maintain the tools you need.</p>
+                        <ul class="service-features">
+                            <li>Technical training</li>
+                            <li>System implementation</li>
+                            <li>Ongoing maintenance</li>
+                            <li>Custom solutions development</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section with Manual Carousel -->
+    <section id="portfolio" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Our Work</h2>
+            <div id="portfolio-carousel" class="carousel slide" data-bs-interval="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/Screenshot 2025-05-17 200041.png" class="d-block w-100 rounded" alt="Project 1">
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="carousel-caption text-start text-dark position-relative">
+                                    <h3>Planting planning</h3>
+                                    <p>We worked with a small business to map native planting areas, providing data for planning and analysis.</p>
+                                    <p><strong>Tech:</strong> Aerial photos, GIS, data collection app</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/GorseBusters.png" class="d-block w-100 rounded" alt="Project 2">
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="carousel-caption text-start text-dark position-relative">
+                                    <h3>Busting Gorse</h3> 
+                                    <p>We designed and built a portfolio website for GorseBusters, enabling them to showcase their work.</p> 
+                                    <p><strong>Tech:</strong> Open source, Low-cost, Low maintenance</p>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/App Background - 2048 x 2732px.gif" class="d-block w-100 rounded" alt="Project 3">
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="carousel-caption text-start text-dark position-relative">
+                                    <h3>Have you seen lizards?</h3>
+                                    <p>We designed and built HUSL to assist a team with the data collection of native skinks.</p>
+                                    <p><strong>Tech:</strong> Mobile app, GIS, Data collection</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#portfolio-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#portfolio-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5 text-center text-white">
+        <div class="container">
+            <h2 class="section-title mb-5">What Our Clients Say</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="testimonial-box p-4">
+                        <i class="fas fa-quote-left fa-3x mb-3"></i>
+                        <p class="lead mb-4">"Love it. Bloody awesome. And I don't say that lightly, I'm usually really hard to please"</p>
+                        <div class="testimonial-author">
+                            <p class="mb-0">Baz Hughes</p>
+                            <p class="text-white-50">Founder, GorseBusters</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <p class="lead mb-4">Interested in working with us? Have questions about our services?<br class="d-none d-md-block"> Drop us a line, and we'll get back to you as soon as possible.</p>
+                    <div class="contact-info mb-4">
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-map-marker-alt me-3 mt-1"></i>
+                            <p>Dunedin, New Zealand</p>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-envelope me-3 mt-1"></i>
+                            <p><a href="mailto:info@roguedrones.co.nz" class="text-dark">info@roguedrones.co.nz</a></p>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="fab fa-instagram me-3 mt-1"></i>
+                            <p><a href="https://www.instagram.com/roguedronesnz" target="_blank" class="text-dark">@roguedronesnz</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <form id="contact-form" class="contact-form p-4 bg-white rounded shadow">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" name="subject">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Left column - Logo and copyright -->
+                <div class="footer-brand">
+                    <img src="images/rogue_drones_white.png" alt="Rogue Drones Logo">
+                    <p class="copyright">&copy; 2024 Rogue Drones. All rights reserved.</p>
+                </div>
+                
+                <!-- Right column - Navigation and social -->
+                <div class="footer-links">
+                    <!-- Navigation links -->
+                    <div class="footer-nav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#portfolio">Our work</a>
+                    </div>
+                    
+                    <!-- Social media icons -->
+                    <div class="footer-social">
+                        <p class="text-white">Follow us:</p>
+                        <a href="https://www.instagram.com/roguedronesnz" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/phil-hardman-587751343/" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main-new.js"></script>
+</body>
+</html>

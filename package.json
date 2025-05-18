@@ -1,0 +1,23 @@
+{
+  "name": "rogue-drones-website",
+  "version": "1.0.0",
+  "description": "Rogue Drones website with security enhancements",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "drone",
+    "mapping",
+    "website"
+  ],
+  "author": "Rogue Drones",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "fs-extra": "^11.3.0",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.39.2"
+  }
+}
