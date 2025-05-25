@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /cgi-bin/
+Disallow: /tmp/
+
+# Sitemap
+Sitemap: https://roguedrones.co.nz/sitemap.xml

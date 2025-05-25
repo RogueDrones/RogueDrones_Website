@@ -71,7 +71,7 @@ const processHtmlFiles = async () => {
       '<head>',
       `<head>
     <!-- Preload critical images -->
-    <link rel="preload" as="image" href="images/home_image.JPG">
+    <link rel="preload" as="image" href="images/home_image_comp.JPG">
     <link rel="preload" as="image" href="images/rogue_drones_white.png">
     <!-- DNS prefetch for external resources -->
     <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
@@ -88,8 +88,8 @@ const processHtmlFiles = async () => {
 
     // Optimize hero image loading specifically
     content = content.replace(
-      /style="background-image: url\('images\/home_image\.JPG'\);"/,
-      `style="background-image: url('images/home_image.JPG'); background-size: cover; background-position: center; will-change: transform;"`
+      /style="background-image: url\('images\/home_image_comp\.JPG'\);"/,
+      `style="background-image: url('images/home_image_comp.JPG'); background-size: cover; background-position: center; will-change: transform;"`
     );
     
     // Minify HTML
