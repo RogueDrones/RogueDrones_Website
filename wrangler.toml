@@ -1,0 +1,15 @@
+# Optimized Wrangler configuration for Rogue Drones website
+name = "rogue-drones-website"
+compatibility_date = "2025-05-25"
+
+# Deploy the dist directory as static assets
+[site]
+bucket = "./dist"
+
+# Build configuration
+[build]
+command = "npm run build"
+
+# Environment variables for build (non-sensitive only)
+[vars]
+ENVIRONMENT = "production"

@@ -93,8 +93,8 @@ body {
     transform: scale(1.02);
 }
 
-/* Google Maps Container Styling */
-.google-earth-container {
+/* Mapbox Container Styling */
+.mapbox-container {
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -104,40 +104,83 @@ body {
     border-radius: 0.25rem;
 }
 
-.google-earth-container:hover {
+.mapbox-container:hover {
     transform: scale(1.02);
 }
 
-/* Location button styling - compact icon version */
-.location-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
-    background-color: #ff6f61;
-    border: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+/* Mapbox popup styling */
+.mapboxgl-popup-content {
+    padding: 10px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
-.location-button:hover {
-    background-color: #e55a4f;
-    transform: scale(1.05);
+.mapboxgl-popup-tip {
+    border-top-color: white !important;
 }
 
-.location-button i {
-    color: white;
-    font-size: 16px;
+/* Custom marker styling */
+.mapboxgl-marker {
+    cursor: pointer;
 }
 
-/* Custom location label */
-.location-label {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 2px;
-    border-radius: 3px;
-    margin-top: 50px;
+/* Control styling */
+.mapboxgl-ctrl-group {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mapboxgl-ctrl button {
+    border: none !important;
+    background-color: transparent !important;
+    color: #333 !important;
+}
+
+.mapboxgl-ctrl button:hover {
+    background-color: rgba(255, 111, 97, 0.1) !important;
+    color: #ff6f61 !important;
+}
+
+/* Geolocation control styling */
+.mapboxgl-ctrl-geolocate {
+    background-color: #ff6f61 !important;
+    color: white !important;
+}
+
+.mapboxgl-ctrl-geolocate:hover {
+    background-color: #e55a4f !important;
+}
+
+.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active {
+    background-color: #ff6f61 !important;
+}
+
+.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active:hover {
+    background-color: #e55a4f !important;
+}
+
+/* Attribution styling */
+.mapboxgl-ctrl-attrib {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 10px !important;
+}
+
+/* Mobile responsiveness for map */
+@media (max-width: 767px) {
+    .mapbox-container {
+        height: 300px;
+        margin-top: 2rem;
+    }
+    
+    .mapboxgl-ctrl-group {
+        margin: 5px !important;
+    }
+    
+    .mapboxgl-popup-content {
+        font-size: 12px !important;
+        max-width: 200px !important;
+    }
 }
 
 /* Improved info window styling with logo */
@@ -159,52 +202,6 @@ body {
         height: 300px;
         margin-top: 2rem;
     }
-}
-
-/* ===== Services Section ===== */
-#services {
-    padding: 100px 0;
-    background-color: #000;
-    position: relative;
-}
-
-.service-box {
-    border: 2px solid #ff6f61;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.service-box:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(255, 111, 97, 0.2);
-}
-
-.service-icon {
-    color: #ff6f61;
-    text-align: center;
-}
-
-.service-features {
-    list-style-type: none;
-    padding-left: 0;
-    margin-top: 1rem;
-}
-
-.service-features li {
-    padding: 0.5rem 0;
-    position: relative;
-    padding-left: 1.5rem;
-    font-size: 0.9rem;
-}
-
-.service-features li::before {
-    content: "✓";
-    color: #ff6f61;
-    position: absolute;
-    left: 0;
 }
 
 /* ===== Services Section ===== */

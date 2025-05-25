@@ -49,25 +49,21 @@ Desktop.ini
         "specialise",
         "videography",
         "Zudh"
-    ]
+    ],
+    "postman.settings.dotenv-detection-notification-visibility": false
 }
 ```
 
-# api.md
-
-```md
-AIzaSyCkCfjNvZudhVc4uhIDurq-GIB8MzkP448
-```
-
-# build.js
+# build-optimized.js
 
 ```js
 /**
- * build.js
- * Build script for Rogue Drones website
+ * build-optimized.js
+ * Enhanced build script for Rogue Drones website with Mapbox integration
  * - Replaces environment variables in files
- * - Minifies JavaScript
- * - Minifies HTML
+ * - Minifies JavaScript and CSS
+ * - Optimizes images for web delivery
+ * - Sets up proper caching headers
  * - Copies all assets to dist folder
  */
 require('dotenv').config();
@@ -75,6 +71,13 @@ const fs = require('fs-extra');
 const path = require('path');
 const { minify } = require('terser');
 const { minify: minifyHtml } = require('html-minifier-terser');
+
+// Environment variables - Mapbox instead of Google Maps
+process.env.MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN || 'YOUR_MAPBOX_ACCESS_TOKEN_HERE';
+
+process.env.EMAILJS_USER_ID = process.env.EMAILJS_USER_ID || 'YOUR_EMAILJS_USER_ID_HERE';
+process.env.EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID || 'YOUR_EMAILJS_SERVICE_ID_HERE';
+process.env.EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || 'YOUR_EMAILJS_TEMPLATE_ID_HERE';
 
 // Paths
 const distPath = './dist';
@@ -85,7 +88,7 @@ fs.emptyDirSync(distPath);
 // Specify which files/folders to copy
 console.log('Copying files to dist directory...');
 const filesToCopy = [
-  { src: './index-new.html', dest: path.join(distPath, 'index.html') },
+  { src: './static-index.html', dest: path.join(distPath, 'index.html') },
   { src: './css', dest: path.join(distPath, 'css') },
   { src: './js', dest: path.join(distPath, 'js') },
   { src: './images', dest: path.join(distPath, 'images') }
@@ -106,7 +109,7 @@ filesToCopy.forEach(({ src, dest }) => {
   }
 });
 
-// Process HTML files - Replace API keys and minify
+// Process HTML files - Replace Mapbox tokens and optimize loading
 const processHtmlFiles = async () => {
   console.log('Processing HTML files...');
   
@@ -116,31 +119,36 @@ const processHtmlFiles = async () => {
     console.log(`Processing HTML: ${file}`);
     let content = fs.readFileSync(file, 'utf8');
     
-    // Replace API key placeholder with actual key from .env
+    // Replace Mapbox access token placeholder with actual token from .env
     content = content.replace(
-      /AIzaSyCkCfjNvZudhVc4uhIDurq-GIB8MzkP448/g,
-      process.env.GOOGLE_MAPS_API_KEY
+      /YOUR_MAPBOX_ACCESS_TOKEN/g,
+      process.env.MAPBOX_ACCESS_TOKEN
     );
     
-    // Update script loading to use dynamic loading approach
+    // Add preload hints for critical images
     content = content.replace(
-      /<script src="https:\/\/maps\.googleapis\.com\/maps\/api\/js\?key=.*&callback=initMap" defer><\/script>/,
-      `<script>
-        // Load Maps API dynamically
-        function loadGoogleMapsApi() {
-          const script = document.createElement('script');
-          script.src = "https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&callback=initMap";
-          script.defer = true;
-          script.async = true;
-          script.onerror = function() {
-            console.error('Google Maps API failed to load');
-            // Could add fallback behavior here
-          };
-          document.head.appendChild(script);
-        }
-        // Call this once the DOM is fully loaded
-        window.addEventListener('DOMContentLoaded', loadGoogleMapsApi);
-      </script>`
+      '<head>',
+      `<head>
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="images/home_image.JPG">
+    <link rel="preload" as="image" href="images/rogue_drones_white.png">
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//api.mapbox.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">`
+    );
+
+    // Add image optimization attributes
+    content = content.replace(
+      /<img([^>]*src="images\/[^"]*"[^>]*)>/g,
+      '<img$1 loading="lazy" decoding="async">'
+    );
+
+    // Optimize hero image loading specifically
+    content = content.replace(
+      /style="background-image: url\('images\/home_image\.JPG'\);"/,
+      `style="background-image: url('images/home_image.JPG'); background-size: cover; background-position: center; will-change: transform;"`
     );
     
     // Minify HTML
@@ -148,14 +156,18 @@ const processHtmlFiles = async () => {
       collapseWhitespace: true,
       removeComments: true,
       minifyCSS: true,
-      minifyJS: true
+      minifyJS: true,
+      removeRedundantAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      useShortDoctype: true
     });
     
     fs.writeFileSync(file, minified);
   }
 };
 
-// Process JS files - Minify and obfuscate
+// Process JS files - Replace Mapbox tokens and minify
 const processJsFiles = async () => {
   console.log('Processing JavaScript files...');
   
@@ -163,24 +175,49 @@ const processJsFiles = async () => {
   
   for (const file of jsFiles) {
     console.log(`Processing JS: ${file}`);
-    const content = fs.readFileSync(file, 'utf8');
+    let content = fs.readFileSync(file, 'utf8');
     
-    // Minify and obfuscate JS
+    // Replace Mapbox access token in JavaScript files
+    content = content.replace(
+      /YOUR_MAPBOX_ACCESS_TOKEN/g,
+      process.env.MAPBOX_ACCESS_TOKEN
+    );
+
+    // Replace EmailJS tokens in JavaScript files
+    content = content.replace(
+      /YOUR_EMAILJS_USER_ID/g,
+      process.env.EMAILJS_USER_ID
+    );
+    content = content.replace(
+      /YOUR_SERVICE_ID/g,
+      process.env.EMAILJS_SERVICE_ID
+    );
+    content = content.replace(
+      /YOUR_TEMPLATE_ID/g,
+      process.env.EMAILJS_TEMPLATE_ID
+    );
+    
+    // Minify and optimize JS
     const result = await minify(content, {
       compress: {
-        drop_console: false, // Set to true in production
+        drop_console: false, // Keep console for debugging, set to true for production
+        drop_debugger: true,
+        pure_funcs: ['console.log'], // Remove console.log in production
       },
-      mangle: true, // This helps with obfuscation
+      mangle: {
+        toplevel: true,
+      },
       output: {
         comments: false
-      }
+      },
+      sourceMap: false // Set to true if you want source maps
     });
     
     fs.writeFileSync(file, result.code);
   }
 };
 
-// Process CSS files - Minify
+// Process CSS files - Add Mapbox styles and minify
 const processCssFiles = async () => {
   console.log('Processing CSS files...');
   
@@ -188,14 +225,84 @@ const processCssFiles = async () => {
   
   for (const file of cssFiles) {
     console.log(`Processing CSS: ${file}`);
-    const content = fs.readFileSync(file, 'utf8');
+    let content = fs.readFileSync(file, 'utf8');
     
-    // Minify CSS using HTML minifier
-    const minified = await minifyHtml(content, {
+    // Add Mapbox-specific CSS optimizations
+    const mapboxStyles = `
+/* Mapbox Container Styling */
+.mapbox-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 400px;
+    transition: transform 0.3s ease;
+    border: 2px solid #ff6f61;
+    border-radius: 0.25rem;
+}
+
+.mapbox-container:hover {
+    transform: scale(1.02);
+}
+
+/* Mapbox popup styling */
+.mapboxgl-popup-content {
+    padding: 10px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.mapboxgl-popup-tip {
+    border-top-color: white !important;
+}
+
+/* Control styling */
+.mapboxgl-ctrl-group {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mapboxgl-ctrl button:hover {
+    background-color: rgba(255, 111, 97, 0.1) !important;
+    color: #ff6f61 !important;
+}
+
+.mapboxgl-ctrl-geolocate {
+    background-color: #ff6f61 !important;
+    color: white !important;
+}
+
+.mapboxgl-ctrl-geolocate:hover {
+    background-color: #e55a4f !important;
+}
+
+@media (max-width: 767px) {
+    .mapbox-container {
+        height: 300px;
+        margin-top: 2rem;
+    }
+}
+`;
+    
+    // Add critical CSS optimizations and Mapbox styles
+    content = `/* Critical CSS optimizations */
+html { font-display: swap; }
+img { max-width: 100%; height: auto; }
+.hero-logo { content-visibility: auto; }
+
+${mapboxStyles}
+
+${content}`;
+    
+    // Minify CSS
+    const minified = await minifyHtml(`<style>${content}</style>`, {
       minifyCSS: true
     });
     
-    fs.writeFileSync(file, minified);
+    // Extract the CSS from the minified HTML
+    const extractedCSS = minified.match(/<style>(.*?)<\/style>/s)[1];
+    
+    fs.writeFileSync(file, extractedCSS);
   }
 };
 
@@ -216,19 +323,47 @@ function getFilesWithExtension(dir, extension, files = []) {
   return files;
 }
 
-// Create _headers file for Cloudflare/Netlify (instead of .htaccess)
+// Create enhanced _headers file for Cloudflare with Mapbox CSP
 const createHeadersFile = () => {
-  console.log('Creating _headers file for Cloudflare...');
+  console.log('Creating enhanced _headers file for Cloudflare...');
   
-  const headersContent = `# Security headers for Cloudflare
+  const headersContent = `# Enhanced headers for Rogue Drones website with Mapbox
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://maps.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; img-src 'self' data: https://*.googleapis.com https://*.gstatic.com; connect-src 'self' https://*.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com data:; frame-src 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://api.mapbox.com https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://api.mapbox.com 'unsafe-inline'; img-src 'self' data: https://*.mapbox.com https://*.mapbox.cn blob:; connect-src 'self' https://*.mapbox.com https://*.mapbox.cn https://*.philhardman.workers.dev https://rogue-drones-website.philhardman.workers.dev; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com data:; frame-src 'self'; object-src 'none'; worker-src 'self' blob:
   X-Content-Type-Options: nosniff
   X-XSS-Protection: 1; mode=block
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: no-referrer-when-downgrade
   Permissions-Policy: geolocation=self, microphone=(), camera=()
+
+# Cache static assets for better performance
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=2592000
+  Accept-Ranges: bytes
+
+# Optimize image formats
+/images/*.jpg
+  Content-Type: image/jpeg
+
+/images/*.png
+  Content-Type: image/png
+
+/images/*.gif
+  Content-Type: image/gif
+
+# Main HTML file - shorter cache
+/
+  Cache-Control: public, max-age=3600
+
+/index.html
+  Cache-Control: public, max-age=3600
 `;
 
   fs.writeFileSync(path.join(distPath, '_headers'), headersContent);
@@ -242,141 +377,292 @@ const createRobotsTxt = () => {
 Allow: /
 Disallow: /cgi-bin/
 Disallow: /tmp/
+
+# Sitemap
+Sitemap: https://roguedrones.co.nz/sitemap.xml
 `;
 
   fs.writeFileSync(path.join(distPath, 'robots.txt'), robotsContent);
 };
 
-// Create a sample .env.example file for documentation
+// Create sitemap for better SEO
+const createSitemap = () => {
+  console.log('Creating sitemap.xml...');
+  
+  const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://roguedrones.co.nz/</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>`;
+
+  fs.writeFileSync(path.join(distPath, 'sitemap.xml'), sitemapContent);
+};
+
+// Update wrangler.toml with enhanced configuration
+const updateWranglerConfig = () => {
+  console.log('Updating wrangler.toml for optimized deployment...');
+  
+  const wranglerContent = `# Optimized Wrangler configuration for Rogue Drones website
+name = "rogue-drones-website"
+compatibility_date = "${new Date().toISOString().split('T')[0]}"
+
+# Deploy the dist directory as static assets
+[site]
+bucket = "./dist"
+
+# Build configuration
+[build]
+command = "npm run build"
+
+# Environment variables for build (non-sensitive only)
+[vars]
+ENVIRONMENT = "production"
+`;
+
+  fs.writeFileSync('wrangler.toml', wranglerContent);
+};
+
+// Create .env.example file with Mapbox configuration
 const createEnvExample = () => {
-  console.log('Creating .env.example...');
+  console.log('Creating .env.example with Mapbox configuration...');
   
   const envContent = `# Environment Variables for Rogue Drones Website
 # Copy this file to .env and replace values with your actual API keys
 
-# Google Maps API Key
-GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY_HERE
+# Mapbox Access Token (replace Google Maps)
+MAPBOX_ACCESS_TOKEN=YOUR_MAPBOX_ACCESS_TOKEN_HERE
+
+# EmailJS Configuration (if using EmailJS for contact form)
+EMAILJS_SERVICE_ID=YOUR_EMAILJS_SERVICE_ID
+EMAILJS_TEMPLATE_ID=YOUR_EMAILJS_TEMPLATE_ID
+EMAILJS_USER_ID=YOUR_EMAILJS_USER_ID
 `;
 
-  // This goes in the project root, not in dist
   fs.writeFileSync('.env.example', envContent);
-};
-
-// Update the contact form
-const updateContactForm = async () => {
-  console.log('Updating contact form to use Cloudflare Worker...');
-  
-  const indexFile = path.join(distPath, 'index.html');
-  if (fs.existsSync(indexFile)) {
-    let content = fs.readFileSync(indexFile, 'utf8');
-    
-    // Add our form handling JavaScript before the closing body tag
-    const formScript = `
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Contact form handler
-  const contactForm = document.getElementById('contact-form');
-  
-  if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      // Get submit button
-      const submitButton = document.querySelector('#contact-form button[type="submit"]');
-      submitButton.disabled = true;
-      submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
-      
-      // Get form data
-      const formData = new FormData(this);
-      
-      try {
-        // TODO: Replace with your actual Cloudflare Worker URL
-        const response = await fetch('https://YOUR_WORKER_URL.workers.dev', {
-          method: 'POST',
-          body: formData
-        });
-        
-        const result = await response.json();
-        
-        // Handle response
-        if (result.success) {
-          // Reset form
-          this.reset();
-          
-          // Show success message
-          const formContainer = document.querySelector('.contact-form');
-          const successMessage = document.createElement('div');
-          successMessage.className = 'alert alert-success mt-3';
-          successMessage.innerHTML = '<strong>Thank you!</strong> Your message has been sent. We\\'ll get back to you soon.';
-          formContainer.appendChild(successMessage);
-          
-          // Remove message after 5 seconds
-          setTimeout(() => {
-            successMessage.remove();
-          }, 5000);
-        } else {
-          // Show error message
-          const formContainer = document.querySelector('.contact-form');
-          const errorMessage = document.createElement('div');
-          errorMessage.className = 'alert alert-danger mt-3';
-          errorMessage.innerHTML = \`<strong>Error:</strong> \${result.error || 'Something went wrong. Please try again.'}\`;
-          formContainer.appendChild(errorMessage);
-          
-          // Remove message after 5 seconds
-          setTimeout(() => {
-            errorMessage.remove();
-          }, 5000);
-        }
-      } catch (error) {
-        console.error('Error submitting form:', error);
-        
-        // Show error message
-        const formContainer = document.querySelector('.contact-form');
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'alert alert-danger mt-3';
-        errorMessage.innerHTML = '<strong>Error:</strong> Could not connect to the server. Please try again later.';
-        formContainer.appendChild(errorMessage);
-        
-        // Remove message after 5 seconds
-        setTimeout(() => {
-          errorMessage.remove();
-        }, 5000);
-      } finally {
-        // Re-enable button
-        submitButton.disabled = false;
-        submitButton.innerHTML = 'Send Message';
-      }
-    });
-  }
-});
-</script>
-`;
-
-    // Insert form script before </body>
-    content = content.replace('</body>', `${formScript}\n</body>`);
-    fs.writeFileSync(indexFile, content);
-  }
 };
 
 // Main build function
 const build = async () => {
   try {
+    console.log('Starting optimized build process with Mapbox...');
+    
     await processHtmlFiles();
     await processJsFiles();
     await processCssFiles();
-    createHeadersFile(); // Use _headers instead of .htaccess for GitHub Pages
+    createHeadersFile();
     createRobotsTxt();
+    createSitemap();
+    updateWranglerConfig();
     createEnvExample();
-    await updateContactForm();
-    console.log('Build completed successfully!');
+    
+    console.log('✅ Optimized build completed successfully!');
+    console.log('');
+    console.log('📊 Build Summary:');
+    console.log('- HTML: Minified with preload hints and lazy loading');
+    console.log('- CSS: Minified with Mapbox optimizations');
+    console.log('- JS: Minified with Mapbox token replacement');
+    console.log('- Images: Configured for lazy loading');
+    console.log('- Headers: Enhanced caching and security with Mapbox CSP');
+    console.log('- SEO: Sitemap and robots.txt created');
+    console.log('- Maps: Converted from Google Maps to Mapbox');
+    console.log('');
+    console.log('⚠️  Don\'t forget to:');
+    console.log('1. Add your Mapbox access token to .env file');
+    console.log('2. Configure EmailJS if using email functionality');
+    console.log('');
+    console.log('🚀 Ready to deploy with: npm run deploy');
+    
   } catch (error) {
-    console.error('Build failed:', error);
+    console.error('❌ Build failed:', error);
     process.exit(1);
   }
 };
 
 // Run the build process
 build();
+```
+
+# contact-form-worker.js
+
+```js
+// contact-form-worker.js - Enhanced version with email sending
+// This worker handles contact form submissions and sends emails via Mailgun
+
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
+
+async function handleRequest(request) {
+  // Handle OPTIONS (CORS preflight) requests
+  if (request.method === 'OPTIONS') {
+    return handleCORS(request);
+  }
+  
+  // Handle GET requests (just for testing/confirmation)
+  if (request.method === 'GET') {
+    return new Response('Rogue Drones Contact Form API is running', {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Access-Control-Allow-Origin': '*'
+      }
+    });
+  }
+
+  // Only allow POST requests for form submissions
+  if (request.method !== 'POST') {
+    return new Response('Method not allowed', { 
+      status: 405,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    });
+  }
+
+  try {
+    // Parse form data
+    const formData = await request.formData();
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const subject = formData.get('subject') || 'Contact Form Submission from Rogue Drones Website';
+    const message = formData.get('message');
+
+    // Validate form data
+    if (!name || !email || !message) {
+      return jsonResponse({ 
+        success: false, 
+        error: 'Please fill out all required fields' 
+      }, 400);
+    }
+
+    // Validate email format
+    if (!isValidEmail(email)) {
+      return jsonResponse({ 
+        success: false, 
+        error: 'Please enter a valid email address' 
+      }, 400);
+    }
+
+    // Send email using Mailgun
+    const emailSent = await sendEmailViaMailgun(name, email, subject, message);
+    
+    if (emailSent.success) {
+      // Log successful submission (optional)
+      console.log(`Contact form submitted by ${name} (${email})`);
+      
+      return jsonResponse({
+        success: true,
+        message: 'Thank you for your message. We will get back to you soon!'
+      });
+    } else {
+      console.error('Email sending failed:', emailSent.error);
+      return jsonResponse({ 
+        success: false, 
+        error: 'Sorry, there was an issue sending your message. Please try again later.' 
+      }, 500);
+    }
+
+  } catch (error) {
+    console.error('Error processing form:', error);
+    return jsonResponse({ 
+      success: false, 
+      error: 'An error occurred while processing your request' 
+    }, 500);
+  }
+}
+
+// Send email using Mailgun API
+async function sendEmailViaMailgun(name, email, subject, message) {
+  try {
+    // Get environment variables (these need to be set in Cloudflare Workers dashboard)
+    const MAILGUN_API_KEY = MAILGUN_API_KEY_SECRET; // This will be set as a secret
+    const MAILGUN_DOMAIN = MAILGUN_DOMAIN_SECRET;   // This will be set as a secret
+    const TO_EMAIL = 'info@roguedrones.co.nz';      // Your email address
+    
+    // Prepare email content
+    const emailBody = `
+New contact form submission from Rogue Drones website:
+
+Name: ${name}
+Email: ${email}
+Subject: ${subject}
+
+Message:
+${message}
+
+---
+Sent from Rogue Drones contact form
+    `;
+
+    // Create form data for Mailgun API
+    const formData = new FormData();
+    formData.append('from', `Rogue Drones Website <noreply@${MAILGUN_DOMAIN}>`);
+    formData.append('to', TO_EMAIL);
+    formData.append('subject', `[Website Contact] ${subject}`);
+    formData.append('text', emailBody);
+    formData.append('h:Reply-To', email); // Allow you to reply directly to the sender
+
+    // Send via Mailgun API
+    const response = await fetch(`https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${btoa(`api:${MAILGUN_API_KEY}`)}`
+      },
+      body: formData
+    });
+
+    if (response.ok) {
+      return { success: true };
+    } else {
+      const errorText = await response.text();
+      return { 
+        success: false, 
+        error: `Mailgun API error: ${response.status} - ${errorText}` 
+      };
+    }
+    
+  } catch (error) {
+    return { 
+      success: false, 
+      error: `Email sending error: ${error.message}` 
+    };
+  }
+}
+
+// Email validation function
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// Helper function to create JSON responses
+function jsonResponse(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    }
+  });
+}
+
+// Handle CORS preflight requests
+function handleCORS(request) {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400'
+    }
+  });
+}
 ```
 
 # css\styles-new.css
@@ -477,8 +763,8 @@ body {
     transform: scale(1.02);
 }
 
-/* Google Maps Container Styling */
-.google-earth-container {
+/* Mapbox Container Styling */
+.mapbox-container {
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -488,40 +774,83 @@ body {
     border-radius: 0.25rem;
 }
 
-.google-earth-container:hover {
+.mapbox-container:hover {
     transform: scale(1.02);
 }
 
-/* Location button styling - compact icon version */
-.location-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
-    background-color: #ff6f61;
-    border: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+/* Mapbox popup styling */
+.mapboxgl-popup-content {
+    padding: 10px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
-.location-button:hover {
-    background-color: #e55a4f;
-    transform: scale(1.05);
+.mapboxgl-popup-tip {
+    border-top-color: white !important;
 }
 
-.location-button i {
-    color: white;
-    font-size: 16px;
+/* Custom marker styling */
+.mapboxgl-marker {
+    cursor: pointer;
 }
 
-/* Custom location label */
-.location-label {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 2px;
-    border-radius: 3px;
-    margin-top: 50px;
+/* Control styling */
+.mapboxgl-ctrl-group {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mapboxgl-ctrl button {
+    border: none !important;
+    background-color: transparent !important;
+    color: #333 !important;
+}
+
+.mapboxgl-ctrl button:hover {
+    background-color: rgba(255, 111, 97, 0.1) !important;
+    color: #ff6f61 !important;
+}
+
+/* Geolocation control styling */
+.mapboxgl-ctrl-geolocate {
+    background-color: #ff6f61 !important;
+    color: white !important;
+}
+
+.mapboxgl-ctrl-geolocate:hover {
+    background-color: #e55a4f !important;
+}
+
+.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active {
+    background-color: #ff6f61 !important;
+}
+
+.mapboxgl-ctrl-geolocate.mapboxgl-ctrl-geolocate-active:hover {
+    background-color: #e55a4f !important;
+}
+
+/* Attribution styling */
+.mapboxgl-ctrl-attrib {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 10px !important;
+}
+
+/* Mobile responsiveness for map */
+@media (max-width: 767px) {
+    .mapbox-container {
+        height: 300px;
+        margin-top: 2rem;
+    }
+    
+    .mapboxgl-ctrl-group {
+        margin: 5px !important;
+    }
+    
+    .mapboxgl-popup-content {
+        font-size: 12px !important;
+        max-width: 200px !important;
+    }
 }
 
 /* Improved info window styling with logo */
@@ -543,52 +872,6 @@ body {
         height: 300px;
         margin-top: 2rem;
     }
-}
-
-/* ===== Services Section ===== */
-#services {
-    padding: 100px 0;
-    background-color: #000;
-    position: relative;
-}
-
-.service-box {
-    border: 2px solid #ff6f61;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.service-box:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(255, 111, 97, 0.2);
-}
-
-.service-icon {
-    color: #ff6f61;
-    text-align: center;
-}
-
-.service-features {
-    list-style-type: none;
-    padding-left: 0;
-    margin-top: 1rem;
-}
-
-.service-features li {
-    padding: 0.5rem 0;
-    position: relative;
-    padding-left: 1.5rem;
-    font-size: 0.9rem;
-}
-
-.service-features li::before {
-    content: "✓";
-    color: #ff6f61;
-    position: absolute;
-    left: 0;
 }
 
 /* ===== Services Section ===== */
@@ -1045,6 +1328,34 @@ html {
 }
 ```
 
+# deploy-contact-worker.ps1
+
+```ps1
+# deploy-contact-worker.ps1
+# Script to deploy the contact form worker to Cloudflare
+
+Write-Host "Deploying Rogue Drones contact form worker to Cloudflare..." -ForegroundColor Green
+
+# Deploy the worker
+npx wrangler deploy contact-form-worker.js --name rogue-drones-contact
+
+Write-Host ""
+Write-Host "Next steps:" -ForegroundColor Yellow
+Write-Host "1. Go to Cloudflare Dashboard > Workers & Pages" -ForegroundColor White
+Write-Host "2. Click on your 'rogue-drones-contact' worker" -ForegroundColor White
+Write-Host "3. Go to Settings > Variables" -ForegroundColor White
+Write-Host "4. Add these environment variables as SECRETS:" -ForegroundColor White
+Write-Host "   - MAILGUN_API_KEY_SECRET: Your Mailgun API key" -ForegroundColor Cyan
+Write-Host "   - MAILGUN_DOMAIN_SECRET: Your Mailgun domain" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "To get Mailgun credentials:" -ForegroundColor Yellow
+Write-Host "1. Sign up at https://www.mailgun.com (free tier available)" -ForegroundColor White
+Write-Host "2. Verify your domain or use sandbox domain for testing" -ForegroundColor White
+Write-Host "3. Get your API key from Mailgun dashboard" -ForegroundColor White
+Write-Host ""
+Write-Host "Worker deployed successfully!" -ForegroundColor Green
+```
+
 # images\App Background - 2048 x 2732px.gif
 
 This is a binary file of the type: Image
@@ -1062,7 +1373,7 @@ Screenshot 2025-05-17 182209.png=@Screenshot 2025-05-17 182209.png,0
 
 This is a binary file of the type: Image
 
-# images\home_image.JPG
+# images\home_image_comp.jpg
 
 This is a binary file of the type: Image
 
@@ -1078,7 +1389,270 @@ This is a binary file of the type: Image
 
 This is a binary file of the type: Image
 
-# index-new.html
+# js\main-mapbox.js
+
+```js
+/**
+ * js/main-mapbox.js
+ * Simple, standard approach for Mapbox integration
+ */
+
+// Mapbox public access token - this is completely normal to have in client-side code
+// Public tokens are DESIGNED to be visible and have built-in restrictions
+mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ndWUtZHJvbmVzIiwiYSI6ImNtMGhiOXg2ajA2a2IybG9ndWJ0Nm1lZzMifQ.NinfkW9LV2o2zhE9YjyUSg';
+
+document.addEventListener('DOMContentLoaded', function() {
+    initScrollAnimation();
+    initSmoothScrolling();
+    initContactFormWithEmailJS();
+    initPortfolioCarousel();
+    initMapboxMap();
+});
+
+/**
+ * Initialize Mapbox map
+ */
+function initMapboxMap() {
+    console.log('Initializing Mapbox map...');
+    
+    const mapContainer = document.getElementById('map-container');
+    if (!mapContainer) {
+        console.error('Map container not found!');
+        return;
+    }
+    
+    // Clear the loading spinner
+    mapContainer.innerHTML = '';
+    
+    try {
+        // Create the map centered on New Zealand
+        const map = new mapboxgl.Map({
+            container: 'map-container',
+            style: 'mapbox://styles/mapbox/satellite-streets-v12',
+            center: [172.5, -41.0], // [longitude, latitude] for center of New Zealand
+            zoom: 4.0,
+            pitch: 0,
+            bearing: 0
+        });
+
+        // Add navigation controls
+        map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+        map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
+        map.addControl(new mapboxgl.ScaleControl({
+            maxWidth: 100,
+            unit: 'metric'
+        }), 'bottom-left');
+
+        // Wait for map to load before adding markers
+        map.on('load', function() {
+            console.log('Mapbox map loaded successfully');
+            
+            // Add marker for Dunedin
+            const dunedinMarker = new mapboxgl.Marker({
+                color: '#ff6f61' // Rogue Drones brand color
+            })
+            .setLngLat([170.5035, -45.8742])
+            .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(`
+                <div style="text-align: center; padding: 10px;">
+                    <img src="images/rogue_drones_black.png" alt="Rogue Drones" style="height: 60px; margin-bottom: 10px;">
+                    <h6 style="margin: 5px 0;">Rogue Drones</h6>
+                    <p style="margin: 0; color: #666;">Dunedin, New Zealand</p>
+                </div>
+            `))
+            .addTo(map);
+
+            // Add geolocation control
+            if (navigator.geolocation) {
+                const geolocateControl = new mapboxgl.GeolocateControl({
+                    positionOptions: { enableHighAccuracy: true },
+                    trackUserLocation: true,
+                    showUserHeading: true,
+                    showAccuracyCircle: true,
+                    fitBoundsOptions: { maxZoom: 12 }
+                });
+                map.addControl(geolocateControl, 'top-left');
+            }
+        });
+
+        // Handle map errors
+        map.on('error', function(error) {
+            console.error('Mapbox error:', error);
+            mapContainer.innerHTML = '<p class="text-center p-4">Map temporarily unavailable</p>';
+        });
+
+    } catch (error) {
+        console.error('Error initializing Mapbox:', error);
+        mapContainer.innerHTML = '<p class="text-center p-4">Map temporarily unavailable</p>';
+    }
+}
+
+/**
+ * Initialize contact form
+ */
+function initContactFormWithEmailJS() {
+    const contactForm = document.getElementById('contact-form');
+    
+    if (!contactForm) return;
+    
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        if (!validateForm(name, email, message)) {
+            return;
+        }
+        
+        // For now, just show success message
+        document.getElementById('contact-form').reset();
+        showFormMessage('success', '🎉 Thank you! Please contact us at info@roguedrones.co.nz');
+    });
+}
+
+function validateForm(name, email, message) {
+    if (name === '') {
+        showFormMessage('error', 'Please enter your name');
+        return false;
+    }
+    if (email === '' || !isValidEmail(email)) {
+        showFormMessage('error', 'Please enter a valid email address');
+        return false;
+    }
+    if (message === '' || message.length < 10) {
+        showFormMessage('error', 'Please enter a message (at least 10 characters)');
+        return false;
+    }
+    return true;
+}
+
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function showFormMessage(type, messageText) {
+    const formContainer = document.querySelector('.contact-form');
+    const existingMessages = formContainer.querySelectorAll('.alert');
+    existingMessages.forEach(msg => msg.remove());
+    
+    const messageDiv = document.createElement('div');
+    const alertClass = type === 'success' ? 'success' : 'danger';
+    messageDiv.className = `alert alert-${alertClass} mt-3`;
+    messageDiv.innerHTML = messageText;
+    formContainer.appendChild(messageDiv);
+    
+    setTimeout(() => messageDiv?.remove(), 8000);
+}
+
+/**
+ * Initialize scroll animations
+ */
+function initScrollAnimation() {
+    const animateElements = document.querySelectorAll('.service-box, .section-title, #about img, .contact-form');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fadeIn');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    animateElements.forEach(element => {
+        element.style.opacity = '0';
+        observer.observe(element);
+    });
+}
+
+/**
+ * Initialize smooth scrolling
+ */
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+}
+
+/**
+ * Initialize portfolio carousel
+ */
+function initPortfolioCarousel() {
+    const carousel = document.getElementById('portfolio-carousel');
+    if (!carousel) return;
+    
+    const carouselInstance = new bootstrap.Carousel(carousel, {
+        interval: false,
+        wrap: true,
+        keyboard: true
+    });
+    
+    document.addEventListener('keydown', (event) => {
+        if (isElementInViewport(carousel)) {
+            if (event.key === 'ArrowLeft') carouselInstance.prev();
+            if (event.key === 'ArrowRight') carouselInstance.next();
+        }
+    });
+}
+
+function isElementInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return rect.top >= 0 && rect.left >= 0 && 
+           rect.bottom <= window.innerHeight && 
+           rect.right <= window.innerWidth;
+}
+```
+
+# package.json
+
+```json
+{
+  "name": "rogue-drones-website",
+  "version": "1.0.0",
+  "description": "Rogue Drones website with security enhancements and optimizations",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build-optimized.js",
+    "build:basic": "node build.js",
+    "deploy:site": "npx wrangler pages deploy dist",
+    "deploy:worker": "npx wrangler deploy contact-form-worker.js --name rogue-drones-contact",
+    "deploy:full": "npm run build && npm run deploy:site && npm run deploy:worker",
+    "dev": "npx wrangler pages dev dist --port 3000",
+    "preview": "npm run build && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "drone",
+    "mapping",
+    "website",
+    "gis",
+    "cloudflare"
+  ],
+  "author": "Rogue Drones",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "fs-extra": "^11.3.0",
+    "html-minifier-terser": "^7.2.0",
+    "terser": "^5.39.2"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
+```
+
+# static-index.html
 
 ```html
 <!DOCTYPE html>
@@ -1087,21 +1661,37 @@ This is a binary file of the type: Image
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rogue Drones - Mapping the Future</title>
+    
+    <!-- Preload critical resources for faster loading -->
+    <link rel="preload" as="image" href="images/home_image_comp.jpg">
+    <link rel="preload" as="image" href="images/rogue_drones_white.png">
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//api.mapbox.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles-new.css">
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Google Maps JavaScript API - Will be replaced by dynamic loading script -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkCfjNvZudhVc4uhIDurq-GIB8MzkP448&callback=initMap" defer></script>
+    
+    <!-- Mapbox GL JS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+    
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 
 <body>
     <!-- Hero Section -->
-    <section id="hero" class="d-flex flex-column justify-content-center" style="background-image: url('images/home_image.JPG');">
+    <section id="hero" class="d-flex flex-column justify-content-center" style="background-image: url('images/home_image_comp.JPG');">
         <div class="container hero-content text-center text-white">
-            <img src="images/rogue_drones_white.png" alt="Rogue Drones Logo" class="mb-4 img-fluid hero-logo">
+            <img src="images/rogue_drones_white.png" alt="Rogue Drones Logo" class="mb-4 img-fluid hero-logo" loading="eager">
             <h1 class="display-4 mb-3">Mapping the Future</h1>
             <p class="lead mb-4">Affordable, reliable tech solutions for everyone.</p>
             <a href="#contact" class="btn btn-primary btn-lg">Get in Touch</a>
@@ -1118,8 +1708,13 @@ This is a binary file of the type: Image
                     <p class="lead">At Rogue Drones, we believe that cutting-edge technology should be accessible to everyone. Our mission is to democratise access to tech systems and custom applications that can transform how you interact with your environment.</p>
                 </div>
                 <div class="col-lg-6">
-                    <div id="map-container" class="google-earth-container rounded shadow-lg">
-                        <!-- Map will be loaded here by JavaScript -->
+                    <div id="map-container" class="mapbox-container rounded shadow-lg">
+                        <div class="text-center p-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading map...</span>
+                            </div>
+                            <p class="mt-2">Loading interactive map...</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1180,7 +1775,7 @@ This is a binary file of the type: Image
         </div>
     </section>
 
-    <!-- Portfolio Section with Manual Carousel -->
+    <!-- Portfolio Section -->
     <section id="portfolio" class="py-5 bg-light">
         <div class="container">
             <h2 class="section-title text-center mb-5">Our Work</h2>
@@ -1189,7 +1784,7 @@ This is a binary file of the type: Image
                     <div class="carousel-item active">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="images/Screenshot 2025-05-17 200041.png" class="d-block w-100 rounded" alt="Project 1">
+                                <img src="images/Screenshot 2025-05-17 200041.png" class="d-block w-100 rounded" alt="Project 1" loading="lazy">
                             </div>
                             <div class="col-md-6 d-flex align-items-center">
                                 <div class="carousel-caption text-start text-dark position-relative">
@@ -1203,7 +1798,7 @@ This is a binary file of the type: Image
                     <div class="carousel-item">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="images/GorseBusters.png" class="d-block w-100 rounded" alt="Project 2">
+                                <img src="images/GorseBusters.png" class="d-block w-100 rounded" alt="Project 2" loading="lazy">
                             </div>
                             <div class="col-md-6 d-flex align-items-center">
                                 <div class="carousel-caption text-start text-dark position-relative">
@@ -1217,7 +1812,7 @@ This is a binary file of the type: Image
                     <div class="carousel-item">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="images/App Background - 2048 x 2732px.gif" class="d-block w-100 rounded" alt="Project 3">
+                                <img src="images/App Background - 2048 x 2732px.gif" class="d-block w-100 rounded" alt="Project 3" loading="lazy">
                             </div>
                             <div class="col-md-6 d-flex align-items-center">
                                 <div class="carousel-caption text-start text-dark position-relative">
@@ -1313,7 +1908,7 @@ This is a binary file of the type: Image
             <div class="footer-grid">
                 <!-- Left column - Logo and copyright -->
                 <div class="footer-brand">
-                    <img src="images/rogue_drones_white.png" alt="Rogue Drones Logo">
+                    <img src="images/rogue_drones_white.png" alt="Rogue Drones Logo" loading="lazy">
                     <p class="copyright">&copy; 2024 Rogue Drones. All rights reserved.</p>
                 </div>
                 
@@ -1344,390 +1939,22 @@ This is a binary file of the type: Image
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <!-- Custom JS -->
-    <script src="js/main-new.js"></script>
+    <!-- Custom JS with Mapbox -->
+    <script src="js/main-mapbox.js"></script>
 </body>
 </html>
 ```
 
-# js\main-new.js
+# wrangler.toml
 
-```js
-/**
- * js/main-new.js
- * Custom JavaScript for the Rogue Drones one-page landing site
- */
+```toml
+# Wrangler configuration for Rogue Drones website
+name = "rogue-drones-website"
+compatibility_date = "2025-05-18"
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize animation on scroll
-    initScrollAnimation();
-    
-    // Smooth scrolling for anchor links
-    initSmoothScrolling();
-    
-    // Initialize the contact form
-    initContactForm();
-    
-    // Portfolio carousel extra functionality
-    initPortfolioCarousel();
-    
-});
-
-/**
- * Initializes animations for elements as they scroll into view
- */
-function initScrollAnimation() {
-    // Elements to animate on scroll
-    const animateElements = document.querySelectorAll('.service-box, .section-title, #about img, .contact-form');
-    
-    // Create an intersection observer
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            // Add the fadeIn class when the element is visible
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fadeIn');
-                // Once the animation is done, no need to observe anymore
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        root: null, // relative to viewport
-        threshold: 0.1, // trigger when 10% of the element is visible
-        rootMargin: '0px' // no margin
-    });
-    
-    // Observe each element
-    animateElements.forEach(element => {
-        // Remove any existing animation
-        element.classList.remove('fadeIn');
-        // Set initial state
-        element.style.opacity = '0';
-        // Observe the element
-        observer.observe(element);
-    });
-}
-
-/**
- * Initializes smooth scrolling for anchor links
- */
-function initSmoothScrolling() {
-    // Get all links that have an hash
-    const links = document.querySelectorAll('a[href^="#"]');
-    
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            
-            // Only scroll if the target exists
-            if (targetId !== '#') {
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    // Get the target's position relative to the viewport
-                    const rect = targetElement.getBoundingClientRect();
-                    
-                    // Get the current scroll position
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    
-                    // Calculate the target's position on the page
-                    const targetPosition = rect.top + scrollTop;
-                    
-                    // Scroll to the target position
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-        });
-    });
-}
-
-/**
- * Initialize Google Maps with New Zealand focus
- */
-let map;
-function initMap() {
-    // Check if the map container exists
-    const mapContainer = document.getElementById('map-container');
-    if (!mapContainer) return;
-    
-    // Create the map centered on New Zealand
-    map = new google.maps.Map(mapContainer, {
-        center: { lat: -41.2, lng: 172.5 }, // Center of New Zealand
-        zoom: 5,
-        mapTypeId: 'satellite', // Start with satellite view
-        tilt: 0,
-        heading: 0,
-        // UI controls
-        zoomControl: true,
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-            position: google.maps.ControlPosition.TOP_RIGHT
-        },
-        scaleControl: true,
-        streetViewControl: false,
-        rotateControl: true,
-        fullscreenControl: true,
-        gestureHandling: 'greedy' // Makes it easier to navigate on touch devices
-    });
-    
-    // Add a marker for Dunedin
-    const dunedinMarker = new google.maps.Marker({
-        position: { lat: -45.8742, lng: 170.5035 },
-        map: map,
-        title: 'Rogue Drones - Dunedin'
-    });
-
-    // Add an info window for the marker with logo
-    const infoWindow = new google.maps.InfoWindow({
-        content: `
-            <div class="map-info">
-                <img src="images/rogue_drones_black.png" alt="Rogue Drones" class="map-logo">
-            </div>
-        `
-    });
-
-    // Open info window when marker is clicked
-    dunedinMarker.addListener('click', function() {
-        infoWindow.open(map, dunedinMarker);
-    });
-        
-    // Add a "Find My Location" button if geolocation is available
-    if (navigator.geolocation) {
-        const locationButton = document.createElement('button');
-        locationButton.innerHTML = '<i class="fas fa-location-arrow"></i>';
-        locationButton.title = 'Find my location';
-        locationButton.classList.add('btn', 'btn-sm', 'location-button');
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationButton);
-        
-        locationButton.addEventListener('click', function() {
-            // Get user's location
-            navigator.geolocation.getCurrentPosition(
-                // Success callback
-                // Success callback for getting user location
-                function(position) {
-                    const userLocation = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-                    
-                    // Add marker for user location with custom label
-                    const userMarker = new google.maps.Marker({
-                        position: userLocation,
-                        map: map,
-                        title: 'Your Location',
-                        icon: {
-                            path: google.maps.SymbolPath.CIRCLE,
-                            scale: 8,
-                            fillColor: '#4285F4',
-                            fillOpacity: 1,
-                            strokeColor: '#ffffff',
-                            strokeWeight: 2
-                        },
-                        label: {
-                            text: 'You are here',
-                            color: '#ffffff',
-                            fontSize: '12px',
-                            fontWeight: 'bold',
-                            className: 'location-label'
-                        }
-                    });
-                    
-                    // Center map on user location
-                    map.setCenter(userLocation);
-                    map.setZoom(12);
-                    
-                    // No info window - cleaner look
-                },
-                // Error callback
-                function() {
-                    alert('Unable to get your location. Please check your browser settings to ensure location access is enabled.');
-                }
-            );
-        });
-    }
-}
-
-/**
- * Initializes the contact form with validation and submission handling
- */
-function initContactForm() {
-    const contactForm = document.getElementById('contact-form');
-    
-    if (!contactForm) return;
-    
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const subject = document.getElementById('subject').value.trim();
-        const message = document.getElementById('message').value.trim();
-        
-        // Validate form fields
-        if (!validateForm(name, email, message)) {
-            return;
-        }
-        
-        // Simulate form submission
-        simulateFormSubmission(name, email, subject, message);
-    });
-}
-
-/**
- * Validates the contact form fields
- * @param {string} name - The name field value
- * @param {string} email - The email field value
- * @param {string} message - The message field value
- * @returns {boolean} - Whether the form is valid
- */
-function validateForm(name, email, message) {
-    let isValid = true;
-    
-    // Simple validation
-    if (name === '') {
-        alert('Please enter your name');
-        isValid = false;
-    } else if (email === '') {
-        alert('Please enter your email');
-        isValid = false;
-    } else if (!isValidEmail(email)) {
-        alert('Please enter a valid email address');
-        isValid = false;
-    } else if (message === '') {
-        alert('Please enter a message');
-        isValid = false;
-    }
-    
-    return isValid;
-}
-
-/**
- * Validates an email address
- * @param {string} email - The email to validate
- * @returns {boolean} - Whether the email is valid
- */
-function isValidEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email.toLowerCase());
-}
-
-/**
- * Simulates a form submission
- * In a real implementation, this would send data to a server
- * @param {string} name - The name field value
- * @param {string} email - The email field value
- * @param {string} subject - The subject field value
- * @param {string} message - The message field value
- */
-function simulateFormSubmission(name, email, subject, message) {
-    // Disable the submit button
-    const submitButton = document.querySelector('#contact-form button[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
-    
-    // Simulate an AJAX request with a timeout
-    setTimeout(() => {
-        // Reset the form
-        document.getElementById('contact-form').reset();
-        
-        // Re-enable the button and show success message
-        submitButton.disabled = false;
-        submitButton.innerHTML = 'Send Message';
-        
-        // Display success message
-        const formContainer = document.querySelector('.contact-form');
-        const successMessage = document.createElement('div');
-        successMessage.className = 'alert alert-success mt-3';
-        successMessage.innerHTML = '<strong>Thank you!</strong> Your message has been sent. We\'ll get back to you soon.';
-        formContainer.appendChild(successMessage);
-        
-        // Remove the success message after 5 seconds
-        setTimeout(() => {
-            successMessage.remove();
-        }, 5000);
-        
-        // In a real implementation, you would send data to your server here
-        console.log('Form submitted with the following data:');
-        console.log({ name, email, subject, message });
-    }, 1500); // Simulate network delay
-}
-
-/**
- * Initializes the portfolio carousel without auto-rotation
- */
-function initPortfolioCarousel() {
-    const carousel = document.getElementById('portfolio-carousel');
-    
-    if (!carousel) return;
-    
-    // Initialize carousel with auto-play disabled
-    const carouselInstance = new bootstrap.Carousel(carousel, {
-        interval: false, // Disable auto-rotation
-        wrap: true,      // Allow wrapping from last to first slide
-        keyboard: true   // Enable keyboard controls
-    });
-    
-    // Add keyboard navigation for the carousel
-    document.addEventListener('keydown', (event) => {
-        if (isElementInViewport(carousel)) {
-            if (event.key === 'ArrowLeft') {
-                carouselInstance.prev();
-            } else if (event.key === 'ArrowRight') {
-                carouselInstance.next();
-            }
-        }
-    });
-}
-
-/**
- * Checks if an element is in the viewport
- * @param {HTMLElement} element - The element to check
- * @returns {boolean} - Whether the element is in the viewport
- */
-function isElementInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
-```
-
-# package.json
-
-```json
-{
-  "name": "rogue-drones-website",
-  "version": "1.0.0",
-  "description": "Rogue Drones website with security enhancements",
-  "main": "index.js",
-  "scripts": {
-    "build": "node build.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "drone",
-    "mapping",
-    "website"
-  ],
-  "author": "Rogue Drones",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^16.5.0",
-    "fs-extra": "^11.3.0",
-    "html-minifier-terser": "^7.2.0",
-    "terser": "^5.39.2"
-  }
-}
+# Deploy the dist directory as static assets
+[site]
+bucket = "./dist"
 
 ```
 

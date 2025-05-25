@@ -1,16 +1,24 @@
 {
   "name": "rogue-drones-website",
   "version": "1.0.0",
-  "description": "Rogue Drones website with security enhancements",
+  "description": "Rogue Drones website with security enhancements and optimizations",
   "main": "index.js",
   "scripts": {
-    "build": "node build.js",
+    "build": "node build-optimized.js",
+    "build:basic": "node build.js",
+    "deploy:site": "npx wrangler pages deploy dist",
+    "deploy:worker": "npx wrangler deploy contact-form-worker.js --name rogue-drones-contact",
+    "deploy:full": "npm run build && npm run deploy:site && npm run deploy:worker",
+    "dev": "npx wrangler pages dev dist --port 3000",
+    "preview": "npm run build && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "drone",
     "mapping",
-    "website"
+    "website",
+    "gis",
+    "cloudflare"
   ],
   "author": "Rogue Drones",
   "license": "ISC",
@@ -19,5 +27,8 @@
     "fs-extra": "^11.3.0",
     "html-minifier-terser": "^7.2.0",
     "terser": "^5.39.2"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
   }
 }
