@@ -1,0 +1,661 @@
+/* 
+ * styles-new.css
+ * Custom CSS for the Rogue Drones one-page landing site
+ */
+
+/* ===== General Styling ===== */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #000;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+.section-title {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: #ff6f61;
+    margin-top: 10px;
+}
+
+/* ===== Hero Section ===== */
+#hero {
+    position: relative;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+}
+
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);  /* Dark overlay for better text visibility */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+}
+
+.hero-logo {
+    max-height: 450px;
+    width: auto;
+}
+
+.btn-primary {
+    background-color: #ff6f61;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #e55a4f;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== About Section ===== */
+#about {
+    padding: 100px 0;
+    background-color: #f8f9fa;
+}
+
+#about img {
+    transition: transform 0.3s ease;
+}
+
+#about img:hover {
+    transform: scale(1.02);
+}
+
+/* Google Maps Container Styling */
+.google-earth-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 400px;
+    transition: transform 0.3s ease;
+    border: 2px solid #ff6f61;
+    border-radius: 0.25rem;
+}
+
+.google-earth-container:hover {
+    transform: scale(1.02);
+}
+
+/* Location button styling - compact icon version */
+.location-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    background-color: #ff6f61;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.location-button:hover {
+    background-color: #e55a4f;
+    transform: scale(1.05);
+}
+
+.location-button i {
+    color: white;
+    font-size: 16px;
+}
+
+/* Custom location label */
+.location-label {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2px;
+    border-radius: 3px;
+    margin-top: 50px;
+}
+
+/* Improved info window styling with logo */
+.map-info {
+    padding: 1px;
+    height: auto;
+    width: auto;
+    text-align: center;
+}
+
+.map-logo {
+    height: 100px;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+    .google-earth-container {
+        height: 300px;
+        margin-top: 2rem;
+    }
+}
+
+/* ===== Services Section ===== */
+#services {
+    padding: 100px 0;
+    background-color: #000;
+    position: relative;
+}
+
+.service-box {
+    border: 2px solid #ff6f61;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 111, 97, 0.2);
+}
+
+.service-icon {
+    color: #ff6f61;
+    text-align: center;
+}
+
+.service-features {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.service-features li::before {
+    content: "✓";
+    color: #ff6f61;
+    position: absolute;
+    left: 0;
+}
+
+/* ===== Services Section ===== */
+#services {
+    padding: 100px 0;
+    background-color: #000;
+    position: relative;
+}
+
+.service-box {
+    border: 2px solid #ff6f61;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 111, 97, 0.2);
+}
+
+.service-icon {
+    color: #ff6f61;
+    text-align: center;
+}
+
+.service-features {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.service-features li::before {
+    content: "✓";
+    color: #ff6f61;
+    position: absolute;
+    left: 0;
+}
+
+/* ===== Portfolio Section ===== */
+#portfolio {
+    padding: 100px 0;
+    background-color: #f8f9fa;
+}
+
+/* Fixed height image container */
+.carousel-item .col-md-6:first-child {
+    height: 450px; /* Fixed height for all image containers */
+    overflow: hidden; /* Prevents overflow */
+    display: flex;
+    align-items: center;
+}
+
+/* Image styling */
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This crops the image to fill the container while maintaining aspect ratio */
+    display: block; /* Removes any extra space below the image */
+}
+
+/* Repositioned carousel controls */
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    opacity: 0.8;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Position controls outside the content */
+.carousel-control-prev {
+    left: -50px; /* Position outside the carousel */
+}
+
+.carousel-control-next {
+    right: -50px; /* Position outside the carousel */
+}
+
+/* Hover effect for controls */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    opacity: 1;
+}
+
+/* Control icons */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Indicators at bottom */
+.carousel-indicators {
+    position: absolute;
+    bottom: -40px; /* Position below the carousel */
+}
+
+.carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 5px;
+    background-color: #ccc;
+}
+
+.carousel-indicators .active {
+    background-color: #ff6f61;
+}
+
+/* Mobile-first approach for carousel captions */
+.carousel-caption {
+    width: 100%;
+    padding: 0 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: left;
+    position: static !important;
+    color: #333 !important;
+}
+
+.carousel-caption h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.carousel-caption p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+/* Specifically target the technology section */
+.carousel-caption p:last-child {
+    white-space: normal;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    /* Move controls back inside on smaller screens */
+    .carousel-control-prev {
+        left: 10px;
+    }
+    
+    .carousel-control-next {
+        right: 10px;
+    }
+    
+    /* Make controls more transparent on mobile */
+    .carousel-control-prev,
+    .carousel-control-next {
+        background-color: rgba(0, 0, 0, 0.3);
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-item .col-md-6:first-child {
+        height: 300px; /* Smaller height on mobile */
+    }
+    
+    /* Adjust caption font sizes */
+    .carousel-caption h3 {
+        font-size: 1.2rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 768px) {
+    /* Only apply these styles on larger screens */
+    .carousel-caption h3 {
+        font-size: 1.75rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 1rem;
+    }
+}
+
+/* ===== Testimonials Section ===== */
+#testimonials {
+    padding: 100px 0;
+    background-color: #2d2d2d;
+    position: relative;
+}
+
+.testimonial-box {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    position: relative;
+}
+
+.fa-quote-left {
+    color: #ff6f61;
+    opacity: 0.5;
+}
+
+.testimonial-author {
+    margin-top: 1.5rem;
+    font-weight: bold;
+}
+
+/* ===== Contact Section ===== */
+#contact {
+    padding: 100px 0;
+    background-color: #f8f9fa;
+}
+
+.contact-form {
+    border-top: 4px solid #ff6f61;
+}
+
+.contact-info i {
+    color: #ff6f61;
+    font-size: 1.25rem;
+}
+
+.form-control:focus {
+    border-color: #ff6f61;
+    box-shadow: 0 0 0 0.25rem rgba(255, 111, 97, 0.25);
+}
+
+/* ===== Footer ===== */
+footer {
+    background-color: #1a1a1a;
+    padding: 4rem 0 2rem;
+}
+
+/* Two-column layout for the footer */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+/* Left column - Logo and copyright */
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-brand img {
+    height: 150px;
+    width: auto;
+    margin-bottom: 1.0rem;
+}
+
+.footer-brand .copyright {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin-bottom: 1.0rem;
+}
+
+/* Right column - Links and social */
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2rem;
+}
+
+/* Navigation links */
+.footer-nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    position: relative;
+    padding-bottom: 1.5 rem;
+    transition: color 0.3s ease;
+}
+
+.footer-nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #ff6f61;
+    transition: width 0.3s ease;
+}
+
+.footer-nav a:hover {
+    color: #ff6f61;
+}
+
+.footer-nav a:hover::after {
+    width: 100%;
+}
+
+/* Social icons */
+.footer-social {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    background-color: #ff6f61;
+    transform: translateY(-3px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2.5rem;
+    }
+    
+    .footer-brand, .footer-links {
+        align-items: center;
+    }
+    
+    .footer-brand img {
+        margin-bottom: 1rem;
+    }
+    
+    .footer-nav {
+        gap: 1.5rem;
+    }
+}
+
+/* ===== Responsive Adjustments ===== */
+@media (max-width: 991px) {
+    .section-title {
+        text-align: center;
+        display: block;
+    }
+    
+    .section-title::after {
+        margin: 10px auto 0;
+    }
+    
+    #about {
+        text-align: center;
+    }
+    
+    #about img {
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #hero {
+        height: 80vh;
+    }
+    
+    .hero-logo {
+        max-height: 200px;
+    }
+    
+    .service-box {
+        margin-bottom: 2rem;
+    }
+    
+    /* Improve carousel for mobile */
+    .carousel-item .row {
+        flex-direction: column;
+    }
+    
+    .carousel-item .col-md-6:first-child {
+        margin-bottom: 1rem;
+    }
+    
+    /* Adjust spacing for mobile */
+    #portfolio {
+        padding: 50px 0;
+    }
+    
+    #portfolio .container {
+        padding-left: 15px;
+        padding-right: 15px;
+        max-width: 100%;
+    }
+    
+    /* Fix for the carousel item width */
+    .carousel-item {
+        padding: 0 5px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-logo {
+        max-height: 180px;
+    }
+    
+    h1.display-4 {
+        font-size: 2.5rem;
+    }
+    
+    .btn-lg {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+    
+    #testimonials .lead {
+        font-size: 1rem;
+    }
+}
+
+/* ===== Smooth Scrolling ===== */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fadeIn {
+    animation: fadeIn 1s ease-out forwards;
+}
