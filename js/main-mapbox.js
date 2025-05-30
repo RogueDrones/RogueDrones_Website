@@ -8,13 +8,12 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ndWUtZHJvbmVzIiwiYSI6ImNtMGhiOXg2ajA2a2Iyb
 
 // EmailJS configuration - these will be replaced by build script
 const EMAILJS_CONFIG = {
-    publicKey: 'jYYdiIKGp82fYj07q',
-    serviceId: 'service_afgq4m7',
-    templateId: 'template_my8et0g'
+    publicKey: 'YOUR_EMAILJS_PUBLIC_KEY_HERE',
+    serviceId: 'YOUR_EMAILJS_SERVICE_ID_HERE',
+    templateId: 'YOUR_EMAILJS_TEMPLATE_ID_HERE'
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS
     // Initialize EmailJS
     emailjs.init({
         publicKey: EMAILJS_CONFIG.publicKey
