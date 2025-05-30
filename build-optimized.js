@@ -313,7 +313,7 @@ const createHeadersFile = () => {
   Cache-Control: public, max-age=31536000, immutable
 
 /js/*
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: public, max-age=0, s-maxage=0, must-revalidate
 
 /images/*
   Cache-Control: public, max-age=2592000
