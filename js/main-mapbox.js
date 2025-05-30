@@ -1,23 +1,32 @@
 /**
  * js/main-mapbox.js
- * Updated with EmailJS integration for contact form
+ * Updated with EmailJS integration for contact form - LIVE VERSION
  */
 
 // Mapbox public access token
-mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ndWUtZHJvbmVzIiwiYSI6ImNtMGhiOXg2ajA2a2IybG9ndWJ0Nm1lZzMifQ.NinfkW9LV2o2zhE9YjyUSg';
+mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ndWUtZHJvbmVzIiwiYSI2ImNtMGhiOXg2ajA2a2IybG9ndWJ0Nm1lZzMifQ.NinfkW9LV2o2zhE9YjyUSg';
 
-// EmailJS configuration - these will be replaced by build script
+// EmailJS configuration - VERIFIED VALUES
 const EMAILJS_CONFIG = {
-    publicKey: 'YOUR_EMAILJS_PUBLIC_KEY_HERE',
-    serviceId: 'YOUR_EMAILJS_SERVICE_ID_HERE',
-    templateId: 'YOUR_EMAILJS_TEMPLATE_ID_HERE'
+    publicKey: 'jYYdiIKGp82fYj07q',
+    serviceId: 'service_afgq4m7',
+    templateId: 'template_my8et0g'
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS
-    emailjs.init({
-        publicKey: EMAILJS_CONFIG.publicKey
+    console.log('Initializing EmailJS with config:', {
+        publicKey: EMAILJS_CONFIG.publicKey,
+        serviceId: EMAILJS_CONFIG.serviceId,
+        templateId: EMAILJS_CONFIG.templateId
     });
+    
+    // Initialize EmailJS
+    try {
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+        console.log('EmailJS initialized successfully');
+    } catch (error) {
+        console.error('Failed to initialize EmailJS:', error);
+    }
     
     initScrollAnimation();
     initSmoothScrolling();
@@ -109,10 +118,16 @@ function initMapboxMap() {
 function initContactFormWithEmailJS() {
     const contactForm = document.getElementById('contact-form');
     
-    if (!contactForm) return;
+    if (!contactForm) {
+        console.error('Contact form not found!');
+        return;
+    }
+    
+    console.log('Contact form found, adding event listener');
     
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
+        console.log('Contact form submitted');
         
         const submitButton = contactForm.querySelector('button[type="submit"]');
         const originalButtonText = submitButton.textContent;
@@ -123,8 +138,11 @@ function initContactFormWithEmailJS() {
         const subject = document.getElementById('subject').value.trim() || 'Contact Form Submission';
         const message = document.getElementById('message').value.trim();
         
+        console.log('Form data:', { name, email, subject, message });
+        
         // Validate form
         if (!validateForm(name, email, message)) {
+            console.log('Form validation failed');
             return;
         }
         
@@ -133,7 +151,7 @@ function initContactFormWithEmailJS() {
         submitButton.textContent = 'Sending...';
         
         try {
-            // Send email using EmailJS
+            // Prepare template parameters
             const templateParams = {
                 from_name: name,
                 from_email: email,
@@ -142,10 +160,15 @@ function initContactFormWithEmailJS() {
                 to_email: 'philhardman@roguedrones.co.nz'
             };
             
+            console.log('Sending email with params:', templateParams);
+            console.log('Using EmailJS config:', EMAILJS_CONFIG);
+            
+            // Send email using EmailJS
             const response = await emailjs.send(
                 EMAILJS_CONFIG.serviceId,
                 EMAILJS_CONFIG.templateId,
-                templateParams
+                templateParams,
+                EMAILJS_CONFIG.publicKey
             );
             
             console.log('Email sent successfully:', response);
@@ -156,7 +179,26 @@ function initContactFormWithEmailJS() {
             
         } catch (error) {
             console.error('Error sending email:', error);
-            showFormMessage('error', '❌ Sorry, there was an error sending your message. Please try emailing us directly at info@roguedrones.co.nz');
+            console.error('Error details:', {
+                status: error.status,
+                text: error.text,
+                message: error.message
+            });
+            
+            // Show specific error messages
+            let errorMessage = '❌ Sorry, there was an error sending your message. ';
+            
+            if (error.text && error.text.includes('Public Key')) {
+                errorMessage += 'EmailJS configuration issue. ';
+            } else if (error.text && error.text.includes('Service')) {
+                errorMessage += 'Email service temporarily unavailable. ';
+            } else if (error.text && error.text.includes('Template')) {
+                errorMessage += 'Email template issue. ';
+            }
+            
+            errorMessage += 'Please try emailing us directly at philhardman@roguedrones.co.nz';
+            
+            showFormMessage('error', errorMessage);
         } finally {
             // Reset button state
             submitButton.disabled = false;
@@ -182,18 +224,33 @@ function validateForm(name, email, message) {
 }
 
 function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 }
 
 function showFormMessage(type, messageText) {
     const formContainer = document.querySelector('.contact-form');
+    if (!formContainer) {
+        console.error('Contact form container not found');
+        return;
+    }
+    
+    // Remove existing messages
     const existingMessages = formContainer.querySelectorAll('.alert');
     existingMessages.forEach(msg => msg.remove());
     
+    // Create new message
     const messageDiv = document.createElement('div');
-    const alertClass = type === 'success' ? 'success' : 'danger';
-    messageDiv.className = `alert alert-${alertClass} mt-3`;
+    const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    messageDiv.className = `alert ${alertClass} mt-3`;
+    messageDiv.style.padding = '15px';
+    messageDiv.style.marginTop = '15px';
+    messageDiv.style.borderRadius = '5px';
+    messageDiv.style.border = type === 'success' ? '1px solid #d4edda' : '1px solid #f5c6cb';
+    messageDiv.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
+    messageDiv.style.color = type === 'success' ? '#155724' : '#721c24';
     messageDiv.innerHTML = messageText;
+    
     formContainer.appendChild(messageDiv);
     
     // Auto-remove message after 8 seconds
