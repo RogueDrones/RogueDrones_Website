@@ -62,7 +62,7 @@ const processHtmlFiles = async () => {
     
     // Replace Mapbox access token placeholder with actual token from .env
     content = content.replace(
-      /YOUR_MAPBOX_ACCESS_TOKEN/g,
+      /YOUR_MAPBOX_ACCESS_TOKEN_HERE/g,
       process.env.MAPBOX_ACCESS_TOKEN
     );
     
@@ -108,7 +108,7 @@ const processHtmlFiles = async () => {
   }
 };
 
-// Process JS files - Replace Mapbox tokens and minify
+// Process JS files - Replace tokens and minify
 const processJsFiles = async () => {
   console.log('Processing JavaScript files...');
   
@@ -120,33 +120,39 @@ const processJsFiles = async () => {
     
     // Replace Mapbox access token in JavaScript files
     content = content.replace(
-      /YOUR_MAPBOX_ACCESS_TOKEN/g,
+      /YOUR_MAPBOX_ACCESS_TOKEN_HERE/g,
       process.env.MAPBOX_ACCESS_TOKEN
     );
 
-    // Replace EmailJS tokens in JavaScript files
+    // Replace EmailJS tokens in JavaScript files - CORRECTED PLACEHOLDERS
     content = content.replace(
-      /YOUR_EMAILJS_PUBLIC_KEY/g,
+      /YOUR_EMAILJS_PUBLIC_KEY_HERE/g,
       process.env.EMAILJS_PUBLIC_KEY
     );
     content = content.replace(
-      /YOUR_SERVICE_ID/g,
+      /YOUR_EMAILJS_SERVICE_ID_HERE/g,
       process.env.EMAILJS_SERVICE_ID
     );
     content = content.replace(
-      /YOUR_TEMPLATE_ID/g,
+      /YOUR_EMAILJS_TEMPLATE_ID_HERE/g,
       process.env.EMAILJS_TEMPLATE_ID
     );
+    
+    // Add debug logging for token replacement
+    console.log(`Replacing tokens in ${file}:`);
+    console.log(`- EMAILJS_PUBLIC_KEY: ${process.env.EMAILJS_PUBLIC_KEY ? 'Found' : 'Missing'}`);
+    console.log(`- EMAILJS_SERVICE_ID: ${process.env.EMAILJS_SERVICE_ID ? 'Found' : 'Missing'}`);
+    console.log(`- EMAILJS_TEMPLATE_ID: ${process.env.EMAILJS_TEMPLATE_ID ? 'Found' : 'Missing'}`);
     
     // Minify and optimize JS
     const result = await minify(content, {
       compress: {
         drop_console: false, // Keep console for debugging, set to true for production
         drop_debugger: true,
-        pure_funcs: ['console.log'], // Remove console.log in production
+        pure_funcs: [], // Don't remove console.log for debugging
       },
       mangle: {
-        toplevel: true,
+        toplevel: false, // Don't mangle for easier debugging
       },
       output: {
         comments: false
@@ -377,10 +383,10 @@ const createEnvExample = () => {
 # Mapbox Access Token (replace Google Maps)
 MAPBOX_ACCESS_TOKEN=YOUR_MAPBOX_ACCESS_TOKEN_HERE
 
-# EmailJS Configuration (if using EmailJS for contact form)
-EMAILJS_SERVICE_ID=YOUR_EMAILJS_SERVICE_ID
-EMAILJS_TEMPLATE_ID=YOUR_EMAILJS_TEMPLATE_ID
-EMAILJS_USER_ID=YOUR_EMAILJS_USER_ID
+# EmailJS Configuration
+EMAILJS_PUBLIC_KEY=YOUR_EMAILJS_PUBLIC_KEY_HERE
+EMAILJS_SERVICE_ID=YOUR_EMAILJS_SERVICE_ID_HERE
+EMAILJS_TEMPLATE_ID=YOUR_EMAILJS_TEMPLATE_ID_HERE
 `;
 
   fs.writeFileSync('.env.example', envContent);
@@ -390,6 +396,11 @@ EMAILJS_USER_ID=YOUR_EMAILJS_USER_ID
 const build = async () => {
   try {
     console.log('Starting optimized build process with Mapbox...');
+    console.log('Environment variables check:');
+    console.log(`- EMAILJS_PUBLIC_KEY: ${process.env.EMAILJS_PUBLIC_KEY ? 'SET' : 'NOT SET'}`);
+    console.log(`- EMAILJS_SERVICE_ID: ${process.env.EMAILJS_SERVICE_ID ? 'SET' : 'NOT SET'}`);
+    console.log(`- EMAILJS_TEMPLATE_ID: ${process.env.EMAILJS_TEMPLATE_ID ? 'SET' : 'NOT SET'}`);
+    console.log('');
     
     await processHtmlFiles();
     await processJsFiles();
@@ -405,15 +416,15 @@ const build = async () => {
     console.log('📊 Build Summary:');
     console.log('- HTML: Minified with preload hints and lazy loading');
     console.log('- CSS: Minified with Mapbox optimizations');
-    console.log('- JS: Minified with Mapbox token replacement');
+    console.log('- JS: Minified with token replacement');
     console.log('- Images: Configured for lazy loading');
     console.log('- Headers: Enhanced caching and security with Mapbox CSP');
     console.log('- SEO: Sitemap and robots.txt created');
     console.log('- Maps: Converted from Google Maps to Mapbox');
     console.log('');
     console.log('⚠️  Don\'t forget to:');
-    console.log('1. Add your Mapbox access token to .env file');
-    console.log('2. Configure EmailJS if using email functionality');
+    console.log('1. Add your EmailJS credentials to .env file');
+    console.log('2. Configure EmailJS service and template');
     console.log('');
     console.log('🚀 Ready to deploy with: npm run deploy');
     
