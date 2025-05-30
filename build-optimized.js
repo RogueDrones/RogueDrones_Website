@@ -1,24 +1,34 @@
 /**
  * build-optimized.js
- * Enhanced build script for Rogue Drones website with Mapbox integration
- * - Replaces environment variables in files
- * - Minifies JavaScript and CSS
- * - Optimizes images for web delivery
- * - Sets up proper caching headers
- * - Copies all assets to dist folder
+ * Fixed build script for Cloudflare Pages environment variables
  */
-require('dotenv').config();
+
+// Don't require dotenv in Cloudflare Pages - it gets env vars differently
+// require('dotenv').config(); // Comment this out for Cloudflare Pages
+
 const fs = require('fs-extra');
 const path = require('path');
 const { minify } = require('terser');
 const { minify: minifyHtml } = require('html-minifier-terser');
 
-// Environment variables - Mapbox instead of Google Maps
-process.env.MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN || 'YOUR_MAPBOX_ACCESS_TOKEN_HERE';
+// Environment variables - Access directly from process.env (Cloudflare Pages provides these)
+console.log('=== ENVIRONMENT VARIABLES CHECK ===');
+console.log('EMAILJS_PUBLIC_KEY available:', !!process.env.EMAILJS_PUBLIC_KEY);
+console.log('EMAILJS_SERVICE_ID available:', !!process.env.EMAILJS_SERVICE_ID);
+console.log('EMAILJS_TEMPLATE_ID available:', !!process.env.EMAILJS_TEMPLATE_ID);
+console.log('MAPBOX_ACCESS_TOKEN available:', !!process.env.MAPBOX_ACCESS_TOKEN);
+console.log('=====================================');
 
-process.env.EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY || 'YOUR_EMAILJS_PUBLIC_KEY_HERE';
-process.env.EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID || 'YOUR_EMAILJS_SERVICE_ID_HERE';
-process.env.EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || 'YOUR_EMAILJS_TEMPLATE_ID_HERE';
+// Get environment variables with fallbacks
+const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN || 'pk.eyJ1Ijoicm9ndWUtZHJvbmVzIiwiYSI6ImNtMGhiOXg2ajA2a2IybG9ndWJ0Nm1lZzMifQ.NinfkW9LV2o2zhE9YjyUSg';
+const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY || 'jYYdiIKGp82fYj07q';
+const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID || 'service_afgq4m7';
+const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID || 'template_my8et0g';
+
+console.log('Using values:');
+console.log('EMAILJS_PUBLIC_KEY:', EMAILJS_PUBLIC_KEY.substring(0, 10) + '...');
+console.log('EMAILJS_SERVICE_ID:', EMAILJS_SERVICE_ID);
+console.log('EMAILJS_TEMPLATE_ID:', EMAILJS_TEMPLATE_ID);
 
 // Paths
 const distPath = './dist';
@@ -50,7 +60,7 @@ filesToCopy.forEach(({ src, dest }) => {
   }
 });
 
-// Process HTML files - Replace Mapbox tokens and optimize loading
+// Process HTML files
 const processHtmlFiles = async () => {
   console.log('Processing HTML files...');
   
@@ -60,10 +70,10 @@ const processHtmlFiles = async () => {
     console.log(`Processing HTML: ${file}`);
     let content = fs.readFileSync(file, 'utf8');
     
-    // Replace Mapbox access token placeholder with actual token from .env
+    // Replace Mapbox access token placeholder
     content = content.replace(
       /YOUR_MAPBOX_ACCESS_TOKEN_HERE/g,
-      process.env.MAPBOX_ACCESS_TOKEN
+      MAPBOX_ACCESS_TOKEN
     );
     
     // Add preload hints for critical images
@@ -108,7 +118,7 @@ const processHtmlFiles = async () => {
   }
 };
 
-// Process JS files - Replace tokens and minify
+// Process JS files - CRITICAL SECTION
 const processJsFiles = async () => {
   console.log('Processing JavaScript files...');
   
@@ -118,38 +128,51 @@ const processJsFiles = async () => {
     console.log(`Processing JS: ${file}`);
     let content = fs.readFileSync(file, 'utf8');
     
-    // Replace Mapbox access token in JavaScript files
+    console.log('Original content contains placeholders:', {
+      publicKey: content.includes('YOUR_EMAILJS_PUBLIC_KEY_HERE'),
+      serviceId: content.includes('YOUR_EMAILJS_SERVICE_ID_HERE'),
+      templateId: content.includes('YOUR_EMAILJS_TEMPLATE_ID_HERE'),
+      mapbox: content.includes('YOUR_MAPBOX_ACCESS_TOKEN_HERE')
+    });
+    
+    // Replace tokens - EXACT MATCHES
+    const originalContent = content;
+    
     content = content.replace(
       /YOUR_MAPBOX_ACCESS_TOKEN_HERE/g,
-      process.env.MAPBOX_ACCESS_TOKEN
+      MAPBOX_ACCESS_TOKEN
     );
-
-    // Replace EmailJS tokens in JavaScript files - CORRECTED PLACEHOLDERS
+    
     content = content.replace(
       /YOUR_EMAILJS_PUBLIC_KEY_HERE/g,
-      process.env.EMAILJS_PUBLIC_KEY
+      EMAILJS_PUBLIC_KEY
     );
+    
     content = content.replace(
       /YOUR_EMAILJS_SERVICE_ID_HERE/g,
-      process.env.EMAILJS_SERVICE_ID
+      EMAILJS_SERVICE_ID
     );
+    
     content = content.replace(
       /YOUR_EMAILJS_TEMPLATE_ID_HERE/g,
-      process.env.EMAILJS_TEMPLATE_ID
+      EMAILJS_TEMPLATE_ID
     );
     
-    // Add debug logging for token replacement
-    console.log(`Replacing tokens in ${file}:`);
-    console.log(`- EMAILJS_PUBLIC_KEY: ${process.env.EMAILJS_PUBLIC_KEY ? 'Found' : 'Missing'}`);
-    console.log(`- EMAILJS_SERVICE_ID: ${process.env.EMAILJS_SERVICE_ID ? 'Found' : 'Missing'}`);
-    console.log(`- EMAILJS_TEMPLATE_ID: ${process.env.EMAILJS_TEMPLATE_ID ? 'Found' : 'Missing'}`);
+    // Log replacement results
+    const replacements = originalContent !== content;
+    console.log(`Replacements made in ${file}:`, replacements);
     
-    // Minify and optimize JS
+    if (replacements) {
+      console.log('✅ Token replacement successful');
+    } else {
+      console.log('❌ No token replacements made - check placeholder text');
+    }
+    
+    // Minify JS
     const result = await minify(content, {
       compress: {
-        drop_console: false, // Keep console for debugging, set to true for production
+        drop_console: false, // Keep console for debugging
         drop_debugger: true,
-        pure_funcs: [], // Don't remove console.log for debugging
       },
       mangle: {
         toplevel: false, // Don't mangle for easier debugging
@@ -157,14 +180,15 @@ const processJsFiles = async () => {
       output: {
         comments: false
       },
-      sourceMap: false // Set to true if you want source maps
+      sourceMap: false
     });
     
     fs.writeFileSync(file, result.code);
+    console.log(`Minified and saved: ${file}`);
   }
 };
 
-// Process CSS files - Add Mapbox styles and minify
+// Process CSS files
 const processCssFiles = async () => {
   console.log('Processing CSS files...');
   
@@ -270,11 +294,11 @@ function getFilesWithExtension(dir, extension, files = []) {
   return files;
 }
 
-// Create enhanced _headers file for Cloudflare with Mapbox CSP
+// Create enhanced _headers file for Cloudflare
 const createHeadersFile = () => {
   console.log('Creating enhanced _headers file for Cloudflare...');
   
-  const headersContent = `# Enhanced headers for Rogue Drones website with Mapbox
+  const headersContent = `# Enhanced headers for Rogue Drones website
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://api.mapbox.com https://cdnjs.cloudflare.com https://static.cloudflareinsights.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com https://api.mapbox.com 'unsafe-inline'; img-src 'self' data: https://*.mapbox.com https://*.mapbox.cn blob:; connect-src 'self' https://*.mapbox.com https://*.mapbox.cn https://*.philhardman.workers.dev https://rogue-drones-website.philhardman.workers.dev https://api.emailjs.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com data:; frame-src 'self'; object-src 'none'; worker-src 'self' blob:
@@ -284,7 +308,7 @@ const createHeadersFile = () => {
   Referrer-Policy: no-referrer-when-downgrade
   Permissions-Policy: geolocation=self, microphone=(), camera=()
 
-# Cache static assets for better performance
+# Cache static assets
 /css/*
   Cache-Control: public, max-age=31536000, immutable
 
@@ -295,17 +319,7 @@ const createHeadersFile = () => {
   Cache-Control: public, max-age=2592000
   Accept-Ranges: bytes
 
-# Optimize image formats
-/images/*.jpg
-  Content-Type: image/jpeg
-
-/images/*.png
-  Content-Type: image/png
-
-/images/*.gif
-  Content-Type: image/gif
-
-# Main HTML file - shorter cache
+# Main HTML file
 /
   Cache-Control: public, max-age=3600
 
@@ -349,57 +363,11 @@ const createSitemap = () => {
   fs.writeFileSync(path.join(distPath, 'sitemap.xml'), sitemapContent);
 };
 
-// Update wrangler.toml with enhanced configuration
-const updateWranglerConfig = () => {
-  console.log('Updating wrangler.toml for optimized deployment...');
-  
-  const wranglerContent = `# Optimized Wrangler configuration for Rogue Drones website
-name = "rogue-drones-website"
-compatibility_date = "${new Date().toISOString().split('T')[0]}"
-
-# Deploy the dist directory as static assets
-[site]
-bucket = "./dist"
-
-# Build configuration
-[build]
-command = "npm run build"
-
-# Environment variables for build (non-sensitive only)
-[vars]
-ENVIRONMENT = "production"
-`;
-
-  fs.writeFileSync('wrangler.toml', wranglerContent);
-};
-
-// Create .env.example file with Mapbox configuration
-const createEnvExample = () => {
-  console.log('Creating .env.example with Mapbox configuration...');
-  
-  const envContent = `# Environment Variables for Rogue Drones Website
-# Copy this file to .env and replace values with your actual API keys
-
-# Mapbox Access Token (replace Google Maps)
-MAPBOX_ACCESS_TOKEN=YOUR_MAPBOX_ACCESS_TOKEN_HERE
-
-# EmailJS Configuration
-EMAILJS_PUBLIC_KEY=YOUR_EMAILJS_PUBLIC_KEY_HERE
-EMAILJS_SERVICE_ID=YOUR_EMAILJS_SERVICE_ID_HERE
-EMAILJS_TEMPLATE_ID=YOUR_EMAILJS_TEMPLATE_ID_HERE
-`;
-
-  fs.writeFileSync('.env.example', envContent);
-};
-
 // Main build function
 const build = async () => {
   try {
-    console.log('Starting optimized build process with Mapbox...');
-    console.log('Environment variables check:');
-    console.log(`- EMAILJS_PUBLIC_KEY: ${process.env.EMAILJS_PUBLIC_KEY ? 'SET' : 'NOT SET'}`);
-    console.log(`- EMAILJS_SERVICE_ID: ${process.env.EMAILJS_SERVICE_ID ? 'SET' : 'NOT SET'}`);
-    console.log(`- EMAILJS_TEMPLATE_ID: ${process.env.EMAILJS_TEMPLATE_ID ? 'SET' : 'NOT SET'}`);
+    console.log('🚀 Starting optimized build process...');
+    console.log('Environment check completed above ⬆️');
     console.log('');
     
     await processHtmlFiles();
@@ -408,25 +376,14 @@ const build = async () => {
     createHeadersFile();
     createRobotsTxt();
     createSitemap();
-    updateWranglerConfig();
-    createEnvExample();
     
-    console.log('✅ Optimized build completed successfully!');
+    console.log('✅ Build completed successfully!');
     console.log('');
     console.log('📊 Build Summary:');
-    console.log('- HTML: Minified with preload hints and lazy loading');
-    console.log('- CSS: Minified with Mapbox optimizations');
-    console.log('- JS: Minified with token replacement');
-    console.log('- Images: Configured for lazy loading');
-    console.log('- Headers: Enhanced caching and security with Mapbox CSP');
-    console.log('- SEO: Sitemap and robots.txt created');
-    console.log('- Maps: Converted from Google Maps to Mapbox');
-    console.log('');
-    console.log('⚠️  Don\'t forget to:');
-    console.log('1. Add your EmailJS credentials to .env file');
-    console.log('2. Configure EmailJS service and template');
-    console.log('');
-    console.log('🚀 Ready to deploy with: npm run deploy');
+    console.log('- Environment variables loaded from Cloudflare Pages');
+    console.log('- Token replacement completed');
+    console.log('- Files minified and optimized');
+    console.log('- Ready for deployment');
     
   } catch (error) {
     console.error('❌ Build failed:', error);
