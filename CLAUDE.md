@@ -2,14 +2,25 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Status: full rebuild in progress
+## Status: this repo hosts a rebuild of the whole organisation
 
-The current site is being replaced, not maintained. Before changing anything, read
-`docs/superpowers/specs/2026-08-02-rogue-drones-brand-system-design.md` — the approved brand
-system that the rebuild must conform to. It ships on the `docs/brand-system` branch.
+Read `docs/REBUILD.md` first. As of 2026-08-05 this is no longer a website rebuild — it is a
+ground-up rebuild of Rogue Drones covering identity, language, presentation, how clients are
+won, and how client data is captured. The website is one workstream of five, currently third
+in the queue.
 
-The rebuild is scoped as: home page plus one page per department (Websites, Web Applications,
-AI & Automation). The site architecture spec has not been written yet.
+Consequence for anyone working here: **most of what lands in `docs/` has nothing to do with
+the code in this repo.** That is deliberate — it is the only version-controlled home
+available and specs need history more than a tidy path. The directory name is historical.
+
+The approved identity spec is
+`docs/superpowers/specs/2026-08-02-rogue-drones-brand-system-design.md`. Its §10 conformance
+checklist is the acceptance test for any new UI. Everything ships on the `docs/brand-system`
+branch.
+
+The current site is being replaced, not maintained. Do not fix things in it. The replacement
+is scoped as a home page plus one page per department (Websites, Web Applications, AI &
+Automation), and that spec has not been written yet.
 
 ## Commands
 
@@ -49,17 +60,18 @@ generates and rewrites content, which produces three traps:
    fallbacks in `build-optimized.js`. EmailJS client credentials are public by design — the
    only real protection is the domain allowlist in the EmailJS dashboard.
 
-## Deployment is split and contradictory
+## Deployment — Cloudflare Pages is live (resolved 2026-08-05)
 
-Two deploy paths exist and they disagree:
+Two deploy paths exist in the repo. **Cloudflare Pages is the one actually serving
+roguedrones.co.nz.** Evidence:
 
-- `.github/workflows/deploy.yml` builds on push to `master` and publishes to **GitHub Pages**.
-  A `CNAME` file is present, which supports this being the live path.
-- `package.json` and `wrangler.toml` target **Cloudflare Pages** plus a Worker, and the
-  generated `_headers` and CSP reference `*.philhardman.workers.dev`.
+- Apex and `www` both resolve to Cloudflare (`172.67.144.33`, `104.21.55.23`)
+- The CSP served on `https://roguedrones.co.nz` is byte-for-byte the string inside
+  `createHeadersFile()` in `build-optimized.js`, including `*.philhardman.workers.dev`.
+  GitHub Pages ignores `_headers`, so it cannot be the origin.
 
-Resolve which one is actually serving roguedrones.co.nz before touching deployment. Do not
-assume; the repo does not record the answer.
+`.github/workflows/deploy.yml` (push to `master` → GitHub Pages) and the root `CNAME` are
+dead weight. Delete them during the rebuild rather than leaving a second path that looks live.
 
 ## Conventions
 

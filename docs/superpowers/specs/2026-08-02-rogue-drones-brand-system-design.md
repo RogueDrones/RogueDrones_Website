@@ -2,7 +2,10 @@
 
 **Date:** 2026-08-02
 **Status:** Approved (design phase)
-**Scope:** Brand foundation only. Site architecture, page design and build are a separate spec.
+**Scope:** Brand foundation only — marks, colour, type, form, and the voice rules in §7.
+**Programme:** Workstream 1 of the Rogue Drones rebuild. See `docs/REBUILD.md`. Every later
+workstream — language, presentation, winning work, client data — reads from this document,
+and §2 (the thesis) is the part they read most.
 
 ---
 
@@ -286,7 +289,7 @@ One scale, unvaried, no intermediate values. The monotony is the drone. Values b
 
 ## 9. Out of scope
 
-This spec covers the brand foundation only. The following are deliberately excluded and belong to the site rebuild spec:
+This spec covers the brand foundation only. The following are deliberately excluded and belong to the presentation workstream (3):
 
 - Site architecture — home plus one page per department
 - The map treatment on the home page (parked by agreement; monochrome vs. true-colour is unresolved and is a site decision, not a brand one)
