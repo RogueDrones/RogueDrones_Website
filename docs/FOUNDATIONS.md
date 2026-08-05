@@ -79,6 +79,35 @@ a website.
 
 ---
 
+## Who this is for
+
+Settled 2026-08-05. The limit is not sector, revenue or headcount. It is **whether the
+organisation can be known.**
+
+To be any use at all, Phil has to understand the organisation: spend time in it, talk to the
+people, find the process it actually runs on, and be believed when he tells them he is
+levelling them up rather than laying them off. That last part cannot be done at arm's length
+or through a procurement process. It requires being in the room, and it is slow.
+
+That slowness is also the moat. Eliciting tacit knowledge — shadowing, dumb questions,
+watching the exceptions — does not commoditise, while building gets cheaper every month.
+
+So the criterion is: **can this organisation be known, and can these people believe him?** Six
+people qualifies. A department of forty might. Fifty thousand employees does not — and by
+Phil's own argument nobody inside it can know it either, which is why they automate the wrong
+things.
+
+Enterprise consulting is therefore ruled out on method, not on ambition. Large organisations
+introducing AI badly will learn the hard way, and some of the people they release will be
+freed to think and picked up by better organisations. That is not Rogue Drones' problem to
+solve and pretending otherwise would be a lie about what one person can do.
+
+**Which bounds the value, usefully.** *Free people upwards, never lay them off* governs the
+engagements Phil takes. It is not a claim about the labour market. The keepable version:
+nobody loses a job because of something Rogue Drones built.
+
+---
+
 ## Language rules
 
 Two, both established 2026-08-05. More will follow; these are load-bearing enough to record
@@ -106,6 +135,6 @@ whether they are one. Add to the banned list in brand spec §7.2 at the next rev
 - **Motto.** The compression. Last, deliberately — it is a summary of the above and cannot be
   written before them. Candidate phrasing exists in Phil's own words (*always on a mission*,
   *stop doing the drone work*), unassessed.
-- **The scope decision the mission depends on:** whether Rogue Drones stays with the six and
-  the next twenty, pursues the pattern at enterprise scale, or treats the six as how it earns
-  the right to the pattern. Raised 2026-08-05, not answered.
+- **The consequence of the method for the business itself.** Everything above requires Phil
+  in the room. The moat and the ceiling are the same fact. How Rogue Drones grows — or whether
+  it should — has not been decided, and the mission cannot be written without it.
