@@ -21,9 +21,6 @@ Drones has. Anja's days felt productive. The GorseBusters spreadsheet felt produ
 level is where comfort, completion and identity live — it is legible, finishable, and it
 confirms you are useful, so gravity always pulls down toward it. Nobody climbs by accident.
 
-It is also autobiographical, which is what makes it a belief rather than a clever line. Phil
-does this. Four deployment paths for one static site were four days that felt excellent.
-
 **It names the commercial problem too.** If people think they are being productive, they do
 not come looking. Nobody pays for "you are not ready." The purpose and the hardest fact about
 selling the business are the same sentence. That is a feature — a purpose that made the
@@ -56,13 +53,23 @@ uglier out of it.
 
 Settled 2026-08-05.
 
-The mechanism: build the drone, hand it the drone work, the person climbs. The failure mode
-to avoid, named in the F500 primer and true at every scale: **offloading without climbing.**
-A drone that frees up a day is worth nothing if the day refills with more of the same work.
+The mechanism: build the drone, hand it the drone work, the person climbs.
 
-This is the same operation as the vision, at the only scale available: Anja deciding where
-traps go instead of placing them, the GorseBusters managers handing over an organisation
-instead of maintaining a spreadsheet, Steph making work instead of administering a website.
+**The failure mode is economic, not motivational.** An AI system that takes the work off an
+employee without giving that employee the chance to level up will fail on the numbers, every
+time. The organisation is then paying for the automation *and* for a person whose job did not
+change — which is exactly the F500 pattern in the primer: operational work automated, nothing
+deleted or restructured upward, humans still paid to supervise, and the token bill exceeding
+the salaries. Automation only pays when someone moves.
+
+Which sets the constraint on how it is done: **free people upwards.** Not lay them off, not
+leave them idle. The saving is not the point; the climb is the point, and it is also the only
+version where the economics work.
+
+This is the same operation as the vision, at the only scale available. Drones lay the traps;
+Anja works out how to get more drones out there. The GorseBusters managers hand over an
+organisation instead of maintaining a spreadsheet. Steph makes work instead of administering
+a website.
 
 ---
 

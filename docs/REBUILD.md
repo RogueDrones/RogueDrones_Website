@@ -101,13 +101,20 @@ put actual client data, which must not be in a public repo.
 ## A constraint that shapes every workstream
 
 Phil's own diagnosis, 2026-08-05: nothing tells him a thing is finished. Left alone he will
-improve the same process indefinitely, and he named it as the thing that has held him back.
-The evidence is in this repo — two contradictory deploy paths, `package.json` scripts pointing
-at files that do not exist, three root files the build ignores. That is not neglect. It is the
-residue of improvements that were never closed off.
+keep searching for the best way to do something, indefinitely, and he named it as the thing
+that has held him back. It is not that the searching feels productive — he describes it as
+frustrating. It is that there is no signal that says stop.
 
 The same trait is why he can see waste in someone else's process at a glance. It is one trait,
 not two, and it cannot be half-kept.
+
+**A second cause, and it is not his.** This repo also carries two contradictory deploy paths,
+`package.json` scripts pointing at files that do not exist, and three root files the build
+ignores. Some of that is an abandoned search; much of it is debris left behind by the AI that
+did the building. Phil is not a developer and cannot audit what he cannot read — as he put it, he does
+not know to remove what he does not know to remove. Any process that has him building through
+AI has to include something that cleans up after it, because he has no way to see it himself.
+That is a real operational constraint on the business, not a footnote about this repo.
 
 **Consequence for this programme:** every workstream needs stopping rules, not just standards.
 The brand spec already works this way and that is probably why it felt right — border radius 0,
