@@ -35,10 +35,44 @@ later ones read from earlier ones.
 | 3 | **Presentation** | Website, case studies, collateral, anything a stranger sees | Not started |
 | 4 | **Winning work** | Positioning, how clients arrive, proposals, pricing, saying no | Not started |
 | 5 | **Client data** | Intake, what gets captured about a client and a project, where it lives | Not started |
-| 6 | *Open* | Delivery, handover, ongoing support — named when they're reached | Not started |
+| 6 | **Rogue Drones' own drones** | Applying the thesis to this organisation | **Parked** — see below |
+| 7 | *Open* | Delivery, handover, ongoing support — named when they're reached | Not started |
 
-Row 6 is deliberately vague. It gets filled in when the earlier work makes the shape of
-it obvious, not before.
+Row 7 is deliberately vague. It gets filled in when the earlier work makes the shape of it
+obvious, not before.
+
+### Workstream 6 — parked 2026-08-05, deliberately
+
+Raised at the end of the 2026-08-05 session and parked the same day. Phil's reason for wanting
+it recorded rather than dropped: *I can't instruct other orgs to automate and level up without
+doing it myself.*
+
+**The argument so far.**
+
+The method that makes Rogue Drones worth hiring is Phil sitting with people — slow, human,
+un-automatable, and the moat. It is also the ceiling: the business stops at his available
+hours. The moat and the ceiling are the same fact, and no amount of AI gets past the part that
+makes him good.
+
+Which turns the purpose back on him. If people get held at the wrong level doing work a drone
+should do, the question is what is holding *him* there. He named it in the first message of
+the session without calling it that — the way he captures clients, and the way he captures
+client data. Workstreams 4 and 5 are not housekeeping. They are his drones.
+
+**What is already true.** He has a fleet and has not looked at it as one: `field-log`,
+`daily-planner`, `akv-close-issue`, `akv-docs-sync`, `akv-host-emails`, `plane-add-item`,
+`plane-close-item`, `update-trapnz-db`, `morning`, `sidekick-selector` and others. Each was
+built because something annoyed him that day. That is exactly how the GorseBusters spreadsheet
+grew, and it carries the same two problems: nobody else could run it, and none of it was
+chosen.
+
+**The discipline this must start with**, from his own primer and not negotiable: question the
+requirement, delete the process, simplify, accelerate, **then** automate. Automating first
+builds a permanent monument to a process that should have died. There is a live risk of
+cheerfully building drones for admin that ought not to exist.
+
+**What it needs to start.** An honest inventory of a real week — the actual blocks, including
+the unflattering ones. Delete first, then decide what deserves a drone.
 
 Workstream 2 is not starting from nothing. §7 of the identity spec already sets the voice
 rules — open on the statement, behave don't explain, say what happens not what it's built

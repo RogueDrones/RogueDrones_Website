@@ -23,6 +23,7 @@ website rebuild. It was rescoped on 2026-08-05.
 | 3 | Presentation (incl. website) | Not started |
 | 4 | Winning work | Not started |
 | 5 | Client data | Not started |
+| 6 | Rogue Drones' own drones | Parked 2026-08-05 — argument written up in `REBUILD.md` |
 
 ---
 
