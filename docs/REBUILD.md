@@ -85,8 +85,10 @@ tidy path. The directory name is historical. Revisit when workstream 5 needs som
 put actual client data, which must not be in a public repo.
 
 - `docs/REBUILD.md` — this file. Programme structure. Changes rarely.
+- `docs/FOUNDATIONS.md` — the settled statements: purpose, vision, what the business does
+  about it, language rules. Short by design. Start here.
 - `docs/VISION.md` — the long vision, in Phil's words, and what does and doesn't carry down
-  from it. Primary source. Read it before writing anything the business says about itself.
+  from it. Primary source and the reasoning behind `FOUNDATIONS.md`.
 - `docs/NEXT-SESSION.md` — session handoff. Rewritten every session.
 - `docs/superpowers/specs/` — one dated spec per workstream.
 - `../F500 enterprises discovering AI-legible frameworks.md` — a primer from an earlier

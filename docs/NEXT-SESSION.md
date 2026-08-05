@@ -9,7 +9,7 @@ website rebuild. It was rescoped on 2026-08-05.
 
 ## Say this to start
 
-> Read `docs/REBUILD.md` and `docs/NEXT-SESSION.md`.
+> Read `docs/REBUILD.md`, `docs/FOUNDATIONS.md` and `docs/NEXT-SESSION.md`.
 > [then name the workstream you want to work on]
 
 ---
@@ -35,7 +35,14 @@ website rebuild. It was rescoped on 2026-08-05.
   during the rebuild.
 - Rescoped the whole project from "website rebuild" to "rebuild the organisation".
   Documentation rewritten to match.
-- Started the **motto**.
+- Set out to write a motto. Got much further down than that and settled the two things the
+  motto has to compress. **Purpose: "People think they are being productive."** **Vision: a
+  world where humans understand their place** — recorded in full in `docs/VISION.md`, which
+  is primary source and worth reading before writing any copy. Both in `docs/FOUNDATIONS.md`.
+- Found that the kārearea in brand spec §2.4, the offload-and-climb thesis in the F500 primer,
+  and the domed-city vision are the same idea arrived at three times independently.
+- Recorded the stopping-rule constraint in `REBUILD.md` — it shapes how every later spec
+  should be written.
 
 ## Session before (2026-08-02)
 
@@ -66,6 +73,14 @@ website rebuild. It was rescoped on 2026-08-05.
 
 ## Next move
 
-Finish the motto, then the rest of workstream 2 — the language the business uses about
-itself. Identity first, language second, presentation third; that ordering is deliberate
-and has held up twice now.
+**The mission.** It is the falsifiable one — what Rogue Drones is doing about the purpose,
+now, with a horizon and a way to fail — and nothing downstream can be tested without it.
+
+It is blocked on one decision, raised on 2026-08-05 and not answered: whether Rogue Drones
+stays with the six clients and the next twenty, pursues the pattern at enterprise scale as
+sketched in the F500 primer, or treats the six as how it earns the right to the pattern.
+Those are three different businesses and they produce three different missions.
+
+Values and the motto come after. The motto is a compression of the rest and cannot be written
+first — that was tried on 2026-08-05 and every attempt came out as a slogan with nothing
+underneath it.
