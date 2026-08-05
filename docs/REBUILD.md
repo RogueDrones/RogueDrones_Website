@@ -85,11 +85,34 @@ tidy path. The directory name is historical. Revisit when workstream 5 needs som
 put actual client data, which must not be in a public repo.
 
 - `docs/REBUILD.md` — this file. Programme structure. Changes rarely.
+- `docs/VISION.md` — the long vision, in Phil's words, and what does and doesn't carry down
+  from it. Primary source. Read it before writing anything the business says about itself.
 - `docs/NEXT-SESSION.md` — session handoff. Rewritten every session.
 - `docs/superpowers/specs/` — one dated spec per workstream.
+- `../F500 enterprises discovering AI-legible frameworks.md` — a primer from an earlier
+  thinking session. Outside the repo, unversioned, and load-bearing. It contains the
+  offload-and-climb thesis that turns out to be the same idea as the kārearea in §2.4.
 - Everything else in the repo is the old site, which is being replaced.
 
 ---
+
+## A constraint that shapes every workstream
+
+Phil's own diagnosis, 2026-08-05: nothing tells him a thing is finished. Left alone he will
+improve the same process indefinitely, and he named it as the thing that has held him back.
+The evidence is in this repo — two contradictory deploy paths, `package.json` scripts pointing
+at files that do not exist, three root files the build ignores. That is not neglect. It is the
+residue of improvements that were never closed off.
+
+The same trait is why he can see waste in someone else's process at a glance. It is one trait,
+not two, and it cannot be half-kept.
+
+**Consequence for this programme:** every workstream needs stopping rules, not just standards.
+The brand spec already works this way and that is probably why it felt right — border radius 0,
+exactly one deviation and never two, one spacing scale with no intermediate values, nothing
+heavier than 500, no accent colour ever. Each of those ends an argument that would otherwise
+run forever. Specs here should be written to be finishable, and a rule that can be satisfied
+beats a principle that can always be pursued further.
 
 ## Known gaps
 
