@@ -26,9 +26,15 @@ not come looking. Nobody pays for "you are not ready." The purpose and the harde
 selling the business are the same sentence. That is a feature — a purpose that made the
 business easier would be marketing.
 
-**Usage.** This is the engine, not the copy. Said cold to a client it is an insult, and the
-clients are people working extremely hard. Public versions must aim at the *situation*, never
-at the reader.
+**Where it is seen from.** Both sides at once. Phil sees it from outside — the rogue position
+doing actual work rather than being a brand story — and he is in it himself, knowingly, and
+working on it. That combination is what stops the purpose being a judgment delivered from
+above, and it is the whole reason it can ever be said out loud.
+
+**Usage.** This is the engine, not the copy, and the register matters more than the wording.
+Aimed at the reader it is an accusation, and these are people working extremely hard. Aimed at
+everyone, including the person saying it, it is a recognition. Only the second one is ever
+publishable.
 
 ---
 
