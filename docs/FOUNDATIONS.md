@@ -139,6 +139,35 @@ nobody loses a job because of something Rogue Drones built.
 
 ---
 
+## Values
+
+How the business behaves when behaving costs something. Settled 2026-08-11. Four, each with its
+price named — a value with no cost attached is a poster.
+
+**Nobody loses a job because of something we built, and nobody is left idle by it.**
+Costs: the engagements where the client's real goal is headcount out. Idleness is folded in
+deliberately rather than kept as a separate value — an automation that leaves someone employed
+with nothing to climb into has failed the same way a redundancy does, only more quietly, and
+levelling up is the whole point.
+
+**Delete it before you build it.**
+The primer order, not negotiable: question the requirement, delete the process, simplify,
+accelerate, *then* automate. Costs: the invoice. If the process should have died there is
+nothing left to build, and automating first raises a permanent monument to a process that
+should have been buried.
+
+**No mission starts without an operator.**
+Costs: the work, when nobody will be put forward, or when the honest answer is that nobody
+there can take it.
+
+**Leave nothing the operator cannot run.**
+Costs: unbilled time, every time. This is not tidiness. The mission says the operator runs it
+after Phil leaves, so debris only an AI can read fails the mission by definition — and Phil
+cannot audit what he cannot read. It makes the blind spot a delivery standard instead of a
+personal weakness.
+
+---
+
 ## Language rules
 
 Three. More will follow; these are load-bearing enough to record before the rest of the
@@ -188,13 +217,12 @@ not one, so a bad month does not reopen a settled question.
 
 ## Not written yet
 
-- **Values.** How the business behaves when behaving costs something. Two half-written ones
-  already exist and should be folded in when values are done as a set: *free people upwards,
-  never lay them off, never leave them idle*, and *nobody loses a job because of something
-  Rogue Drones built*.
-- **Motto and tagline.** Both of Phil's candidate lines now have proposed roles, assigned
-  2026-08-11 and not yet settled: *always on a mission* as the tagline, *stop doing the drone
-  work* as the philosophy. They share their vocabulary with the mission, which is what the
-  compression was supposed to achieve and did not need to be written to get.
+- **Motto, tagline, philosophy.** Three lines exist, all Phil's, none settled. They face in
+  three different directions, which is why none of them competes with the others and why
+  choosing between them may not be necessary: *stop doing the drone work* is addressed to the
+  person doing it, *free people upwards* to the organisation deciding, and *always on a
+  mission* is about Rogue Drones itself. Roles proposed 2026-08-11. *Free people upwards* was
+  deliberately kept out of the values so it stays available as a line — its content survives
+  inside the first value regardless.
 Nothing else. The growth question that blocked the mission was settled 2026-08-11 — see
 *How big this gets*.
