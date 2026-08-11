@@ -144,11 +144,17 @@ nobody loses a job because of something Rogue Drones built.
 How the business behaves when behaving costs something. Settled 2026-08-11. Four, each with its
 price named — a value with no cost attached is a poster.
 
-**Nobody loses a job because of something we built, and nobody is left idle by it.**
-Costs: the engagements where the client's real goal is headcount out. Idleness is folded in
-deliberately rather than kept as a separate value — an automation that leaves someone employed
-with nothing to climb into has failed the same way a redundancy does, only more quietly, and
-levelling up is the whole point.
+**Nobody becomes idle through something we built.**
+Costs: the engagements where the client's real goal is headcount out.
+
+Idle is the wider word and it swallows redundancy: losing a job is one way of becoming idle,
+and being kept on with nothing to climb into is the quieter one — which is the failure Rogue
+Drones is more likely to cause. It is also the more testable of the two. Job losses months
+later cannot be attributed to anything with confidence, while idleness is visible at handover,
+which is where the mission's test already sits.
+
+*Through*, not *because of*. The question is whether the thing we built was the channel, not
+who is to blame.
 
 **Delete it before you build it.**
 The primer order, not negotiable: question the requirement, delete the process, simplify,
