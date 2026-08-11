@@ -79,6 +79,37 @@ a website.
 
 ---
 
+## Mission
+
+> **Every mission levels up the operator we named.**
+
+Settled 2026-08-11. Internal — this is the test the work is held to, not a line for a website.
+
+**Falsifiable at both ends.** The operator is named at scoping, so no mission starts without
+deciding who is left holding it. At close, either that person can run the thing without Phil or
+the mission is not finished. The old version allowed the job to be done first and someone
+who had improved to be found afterwards; this one will not let the work begin.
+
+**The operator** is the person who runs it after Phil leaves. A role, not a name and not a job
+title. AKV has volunteers; an SMB might be one person and no staff at all. Every organisation
+has an operator, not every organisation has a team — which is the reason the word beat "the
+team", "your people" and "someone".
+
+**Why the word carries more than it looks.** A drone operates. An operator directs the drone.
+So the operator is what the climb arrives at: stop doing the drone work, run the drone that
+does it instead. The mechanism and its destination turn out to be the same word.
+
+**No time horizon, deliberately.** A standing test applied every mission, not a target. A count
+would be a growth number, and growth is ruled out by *How big this gets*.
+
+**It does not require publication.** An earlier draft ended "and we name them", which forced
+every engagement to be written up and would have produced case-study content as a byproduct.
+Dropped 2026-08-11 — Phil disagrees that the case-study gap is the constraint it looks like and
+asked for it to be revisited at workstream 3 rather than solved here. Whether the close-out
+procedure carries the requirement instead is open.
+
+---
+
 ## Who this is for
 
 Settled 2026-08-05. The limit is not sector, revenue or headcount. It is **whether the
@@ -110,31 +141,60 @@ nobody loses a job because of something Rogue Drones built.
 
 ## Language rules
 
-Two, both established 2026-08-05. More will follow; these are load-bearing enough to record
-before the rest of the language workstream is written.
+Three. More will follow; these are load-bearing enough to record before the rest of the
+language workstream is written.
 
-**"Drone work" is possessive, not descriptive.** It means *the work that belongs to drones* —
+**"Drone work" is possessive, not descriptive.** Established 2026-08-05. It means *the work
+that belongs to drones* —
 and it happens to coincide with the existing English idiom for drudgery, so a stranger reads
 it correctly without knowing the company exists. The second meaning arrives only once they do.
 This is the brand behaving rather than explaining (§7.1 rule 2). Because of it, *drone* keeps
 meaning the machine everywhere else. Never write anything like "we take the drone out of your
 week" — that inverts the word and collapses it.
 
-**No minions.** Not for the machines, not ever for people. In most engagements the person
+**A mission is a job.** Established 2026-08-11. Always that meaning, never the corporate one —
+Rogue Drones does not write "our mission is to…" and does not label the statement above as its
+Mission in public. A stranger reads *always on a mission* as the ordinary English phrase for
+someone driven and busy; the second meaning arrives when they find out the business calls each
+piece of client work a mission. Same structure as *drone work*, and it only holds while the
+word means one thing.
+
+**No minions.** Established 2026-08-05. Not for the machines, not ever for people. In most engagements the person
 being levelled up is the same person whose work was just automated, which is exactly why it
 lands as generous rather than threatening. Half of any audience will hear "minions" and check
 whether they are one. Add to the banned list in brand spec §7.2 at the next review.
 
 ---
 
+## How big this gets
+
+> **The size of Phil's hours, for now.**
+
+Settled 2026-08-11. This unblocks the mission.
+
+The moat and the ceiling are the same fact, and this decision does not try to escape it. The
+un-automatable part — being in the room, being believed — is the part that makes the business
+worth hiring, so it is not handed off to buy headroom.
+
+**The order when the limit is hit.** Automate it. Failing that, do it himself. Only what can be
+neither, and only once the limit is real rather than anticipated, becomes a decision about
+delegation. Outgrowing his hours is a good problem; solving it before he has it is not.
+
+**Stopping rule.** Reviewed on a date, not on a feeling — first review **2027-08-11**, annually
+after. It fires early if Phil turns down work he wanted twice inside one quarter. Two refusals,
+not one, so a bad month does not reopen a settled question.
+
+---
+
 ## Not written yet
 
-- **Mission.** What Rogue Drones is doing about the purpose, now, with a time horizon and a
-  way to fail. This is the falsifiable one and nothing else can be tested without it.
-- **Values.** How the business behaves when behaving costs something.
-- **Motto.** The compression. Last, deliberately — it is a summary of the above and cannot be
-  written before them. Candidate phrasing exists in Phil's own words (*always on a mission*,
-  *stop doing the drone work*), unassessed.
-- **The consequence of the method for the business itself.** Everything above requires Phil
-  in the room. The moat and the ceiling are the same fact. How Rogue Drones grows — or whether
-  it should — has not been decided, and the mission cannot be written without it.
+- **Values.** How the business behaves when behaving costs something. Two half-written ones
+  already exist and should be folded in when values are done as a set: *free people upwards,
+  never lay them off, never leave them idle*, and *nobody loses a job because of something
+  Rogue Drones built*.
+- **Motto and tagline.** Both of Phil's candidate lines now have proposed roles, assigned
+  2026-08-11 and not yet settled: *always on a mission* as the tagline, *stop doing the drone
+  work* as the philosophy. They share their vocabulary with the mission, which is what the
+  compression was supposed to achieve and did not need to be written to get.
+Nothing else. The growth question that blocked the mission was settled 2026-08-11 — see
+*How big this gets*.
