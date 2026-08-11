@@ -6,8 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Read `docs/REBUILD.md` first. As of 2026-08-05 this is no longer a website rebuild — it is a
 ground-up rebuild of Rogue Drones covering identity, language, presentation, how clients are
-won, and how client data is captured. The website is one workstream of five, currently third
-in the queue.
+won, and how client data is captured. The website is one workstream of five.
+
+**Identity and language are both settled** (2026-08-05 and 2026-08-11). The website is the
+current workstream. `docs/FOUNDATIONS.md` is complete and is the authority on what the
+business is allowed to say about itself — read it before writing any copy.
 
 Consequence for anyone working here: **most of what lands in `docs/` has nothing to do with
 the code in this repo.** That is deliberate — it is the only version-controlled home

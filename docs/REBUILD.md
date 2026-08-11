@@ -74,10 +74,13 @@ cheerfully building drones for admin that ought not to exist.
 **What it needs to start.** An honest inventory of a real week — the actual blocks, including
 the unflattering ones. Delete first, then decide what deserves a drone.
 
-Workstream 2 is not starting from nothing. §7 of the identity spec already sets the voice
-rules — open on the statement, behave don't explain, say what happens not what it's built
-with, the banned-word list, one rogue line per page — plus reference copy in §7.4. Language
-extends that; it does not replace it.
+### A note on the voice rules
+
+§7 of the identity spec sets them — open on the statement, behave don't explain, say what
+happens not what it's built with, the banned-word list, one rogue line per page — plus
+reference copy in §7.4. Workstream 2 extended those rules rather than replacing them, and
+workstream 3 writes against both: §7 for how a sentence behaves, `FOUNDATIONS.md` for what
+the business is allowed to claim.
 
 ### Why this order
 
@@ -163,10 +166,13 @@ beats a principle that can always be pursued further.
    spec requires SVG for web use. Department lockups and the banner variant are with the
    graphic designer, who holds the brief and is swamped. Her artwork wins over the spec.
    The rebuild can proceed on the two existing states, but needs them as clean SVG.
-2. **No project or case-study content exists.** No locations, no screenshots of the work,
-   no outcomes written up, and no record of which clients can be named publicly. The
-   website's home page concept depends entirely on this. It is content, not code, and
-   nothing in workstream 3 can be finished without it.
+2. **No project or case-study content exists — but this is disputed.** No locations, no
+   screenshots of the work, no outcomes written up, and no record of which clients can be
+   named publicly. The website's home page concept depends entirely on this, and it is
+   content rather than code. Claude's position on 2026-08-11 was that this is the only gap
+   that decays and should be collected before it rots. **Phil disagrees that it is the
+   constraint it looks like and asked for it to be taken up when workstream 3 reaches it.**
+   Ask him first rather than treating the gap as established.
 3. **The identity spec is unreviewed.** Three things in it were decided without Phil and
    flagged for pushback — `--slate-dark` as a seventh token, form borders using `--slate`
    rather than `--silver`, and the whole of §8 (spacing scale, 12-column grid, motion).
