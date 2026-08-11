@@ -31,8 +31,8 @@ later ones read from earlier ones.
 | # | Workstream | Covers | Status |
 |---|---|---|---|
 | 1 | **Identity** | Marks, colour, type, form, the two mechanisms | **Spec approved** — review owed |
-| 2 | **Language** | Motto, naming, the words the business uses about itself | **In progress** |
-| 3 | **Presentation** | Website, case studies, collateral, anything a stranger sees | Not started |
+| 2 | **Language** | Purpose, vision, mission, values, motto, the words the business uses | **Closed 2026-08-11** — all in `FOUNDATIONS.md` |
+| 3 | **Presentation** | Website, case studies, collateral, anything a stranger sees | **Current.** Not started |
 | 4 | **Winning work** | Positioning, how clients arrive, proposals, pricing, saying no | Not started |
 | 5 | **Client data** | Intake, what gets captured about a client and a project, where it lives | Not started |
 | 6 | **Rogue Drones' own drones** | Applying the thesis to this organisation | **Parked** — see below |

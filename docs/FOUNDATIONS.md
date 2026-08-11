@@ -110,6 +110,26 @@ procedure carries the requirement instead is open.
 
 ---
 
+## How big this gets
+
+> **The size of Phil's hours, for now.**
+
+Settled 2026-08-11. This is what unblocked the mission.
+
+The moat and the ceiling are the same fact, and this decision does not try to escape it. The
+un-automatable part — being in the room, being believed — is the part that makes the business
+worth hiring, so it is not handed off to buy headroom.
+
+**The order when the limit is hit.** Automate it. Failing that, do it himself. Only what can be
+neither, and only once the limit is real rather than anticipated, becomes a decision about
+delegation. Outgrowing his hours is a good problem; solving it before he has it is not.
+
+**Stopping rule.** Reviewed on a date, not on a feeling — first review **2027-08-11**, annually
+after. It fires early if Phil turns down work he wanted twice inside one quarter. Two refusals,
+not one, so a bad month does not reopen a settled question.
+
+---
+
 ## Who this is for
 
 Settled 2026-08-05. The limit is not sector, revenue or headcount. It is **whether the
@@ -201,34 +221,40 @@ whether they are one. Add to the banned list in brand spec §7.2 at the next rev
 
 ---
 
-## How big this gets
+## Motto
 
-> **The size of Phil's hours, for now.**
+> **Always on a mission.**
 
-Settled 2026-08-11. This unblocks the mission.
+Settled 2026-08-11. Phil's own line, said long before most of what it compresses was written.
 
-The moat and the ceiling are the same fact, and this decision does not try to escape it. The
-un-automatable part — being in the room, being believed — is the part that makes the business
-worth hiring, so it is not handed off to buy headroom.
+**Why this one.** All three candidate lines are his and all three survive, but they point in
+different directions. *Stop doing the drone work* is the diagnosis, addressed to the person
+doing it. *Free people upwards* is the method, addressed to the organisation deciding. Only
+*always on a mission* names the destination, which is the job of a motto.
 
-**The order when the limit is hit.** Automate it. Failing that, do it himself. Only what can be
-neither, and only once the limit is real rather than anticipated, becomes a decision about
-delegation. Outgrowing his hours is a good problem; solving it before he has it is not.
+**It contains the first value exactly.** Always on a mission is what *nobody becomes idle* looks
+like from the inside, and every mission levels the operator up. Purpose, mission and value one
+collapse into four words.
 
-**Stopping rule.** Reviewed on a date, not on a feeling — first review **2027-08-11**, annually
-after. It fires early if Phil turns down work he wanted twice inside one quarter. Two refusals,
-not one, so a bad month does not reopen a settled question.
+**It reads two ways and both are true.** A stranger hears the ordinary phrase for someone driven
+and purposeful. Anyone who knows the business hears a job with an operator named and a level
+gained. The *a mission is a job* rule is what keeps the second meaning in place.
+
+**Watch it in copy.** It can tip into never switching off, which would contradict a business
+capped at one person's hours. Always on *a* mission — one job, with an end and an operator —
+not permanently working. The article is load-bearing.
+
+**The other two keep their roles**, proposed and unopposed rather than settled: *stop doing the
+drone work* as the philosophy, *free people upwards* as the line aimed at organisations. *Free
+people upwards* was kept out of the values deliberately so it stays available; its content
+survives inside the first value regardless.
 
 ---
 
-## Not written yet
+## Nothing outstanding
 
-- **Motto, tagline, philosophy.** Three lines exist, all Phil's, none settled. They face in
-  three different directions, which is why none of them competes with the others and why
-  choosing between them may not be necessary: *stop doing the drone work* is addressed to the
-  person doing it, *free people upwards* to the organisation deciding, and *always on a
-  mission* is about Rogue Drones itself. Roles proposed 2026-08-11. *Free people upwards* was
-  deliberately kept out of the values so it stays available as a line — its content survives
-  inside the first value regardless.
-Nothing else. The growth question that blocked the mission was settled 2026-08-11 — see
-*How big this gets*.
+Workstream 2 closed 2026-08-11. Everything the language workstream owed is above.
+
+The next change to this file should be a decision that contradicts something in it, not a gap
+being filled. If a new "not written yet" list appears here, check that it is a real omission
+and not the search restarting.
