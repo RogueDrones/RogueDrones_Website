@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en" data-state="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rogue Drones — home, mockup 03</title>
+<style>
+/* ---- Schist tokens, brand spec §5.1 ---------------------------------- */
+:root{
+  --paper:#F2F3F4; --mist:#E4E6E8; --silver:#B8BCC0;
+  --slate:#6E7378; --slate-dark:#5F6468; --basalt:#1C1F22; --ink:#0C0E10;
+  --s1:8px; --s2:16px; --s3:24px; --s4:40px; --s5:64px; --s6:104px; --s7:168px;
+  --field:var(--paper); --body:var(--basalt); --head:var(--ink);
+  --rule:var(--silver); --meta:var(--slate-dark);
+  --ease:cubic-bezier(0.2,0,0,1);
+}
+[data-state="dark"]{
+  --field:var(--ink); --body:var(--paper); --head:var(--paper);
+  --rule:var(--slate); --meta:var(--silver);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--field); color:var(--body);
+  font-family:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  font-weight:400; font-size:17px; line-height:1.5; overflow-x:hidden;
+  transition:background 400ms var(--ease), color 400ms var(--ease);
+}
+.wrap{max-width:1200px; margin:0 auto; padding:0 var(--s3); position:relative; z-index:1}
+@media(min-width:768px){ .wrap{padding:0 var(--s4)} }
+@media(min-width:1100px){ .wrap{padding:0 var(--s5)} }
+
+.mono,.label{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace}
+.label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--meta)}
+/* Brand spec §6.4, amended 2026-08-12. 500 is the ceiling; body and mono
+   stay 400 and nothing on this site reaches 600. */
+h1,h2,h3{font-weight:500; color:var(--head); letter-spacing:-0.015em}
+p{max-width:46ch}
+
+/* Available to a screen reader, absent from the page. */
+.sr-only{position:absolute; width:1px; height:1px; overflow:hidden;
+         clip-path:inset(50%); white-space:nowrap}
+
+/* §8.4 — hover is inversion or a rule appearing. Focus is a rule appearing too. */
+a:focus-visible,button:focus-visible{outline:1px solid var(--head); outline-offset:3px}
+
+/* ======================================================================
+   THE DRONE LAYER — §3. Sustained, unvaried, keeps going whether or not
+   anyone is watching. Nothing below reacts to the user, ever.
+   ====================================================================== */
+.machine{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+
+/* vertical boundaries that drift — §8.2, column boundaries are a real thing */
+.vline{position:absolute; top:0; bottom:0; width:1px; background:var(--rule); opacity:.45}
+.vline:nth-child(1){left:8%;  animation:drift 41s linear infinite}
+.vline:nth-child(2){left:26%; animation:drift 67s linear infinite reverse}
+.vline:nth-child(3){left:50%; animation:drift 53s linear infinite}
+.vline:nth-child(4){left:74%; animation:drift 79s linear infinite reverse}
+.vline:nth-child(5){left:92%; animation:drift 59s linear infinite}
+@keyframes drift{from{transform:translateX(-9vw)} to{transform:translateX(9vw)}}
+
+/* horizontal scans, deliberately co-prime durations so they never sync */
+.hline{position:absolute; left:0; right:0; height:1px; background:var(--rule); opacity:.6}
+.hline:nth-child(6){animation:scan 13s linear infinite}
+.hline:nth-child(7){animation:scan 19s linear infinite; animation-delay:-7s}
+.hline:nth-child(8){animation:scan 29s linear infinite; animation-delay:-18s}
+.hline:nth-child(9){animation:scan 37s linear infinite; animation-delay:-3s}
+@keyframes scan{from{transform:translateY(-1px)} to{transform:translateY(100vh)}}
+
+/* ---- endless bands --------------------------------------------------- */
+/* Repetition as structure, §7.3. It is not a headline, it is a machine
+   running the motto until the tab is closed.
+   Durations are prime and unused elsewhere — 34/78 shared a factor of 2. */
+.band{
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  overflow:hidden; white-space:nowrap; position:relative; z-index:1;
+  background:var(--field); padding:var(--s2) 0;
+}
+.band .run{display:inline-block; animation:marq 31s linear infinite}
+.band.slow .run{animation-duration:71s}
+.band.rev .run{animation-direction:reverse}
+.band span{
+  font-family:"IBM Plex Mono",monospace; font-size:13px; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--meta); padding:0 var(--s3);
+}
+@keyframes marq{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+
+/* ---- header ---------------------------------------------------------- */
+header{position:sticky; top:0; z-index:10; background:var(--field);
+       border-bottom:1px solid var(--rule)}
+.bar{display:flex; align-items:baseline; gap:var(--s3); height:64px}
+.markish{font-family:"IBM Plex Mono",monospace; font-size:14px;
+         letter-spacing:.22em; color:var(--head); font-weight:500}
+nav{margin-left:auto; display:flex; gap:var(--s3)}
+nav a{color:var(--meta); text-decoration:none; font-family:"IBM Plex Mono",monospace;
+      font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+      padding-bottom:2px; border-bottom:1px solid transparent;
+      transition:border-color 200ms var(--ease)}
+/* A rule appears. No colour shift — §8.4 bans it outright. */
+nav a:hover{border-bottom-color:var(--rule)}
+
+/* ---- hero ------------------------------------------------------------ */
+.hero{padding:var(--s7) 0 var(--s6); position:relative}
+/* Four words earn the room. The old hero was a sentence and had to be sized down. */
+.statement{font-size:clamp(44px,9.5vw,116px); line-height:0.98; max-width:11ch;
+           margin-bottom:var(--s4)}
+.sub{color:var(--meta); font-size:clamp(19px,2.4vw,26px); max-width:34ch}
+
+/* the refrain — §7.3, hard cut, no easing out. It does not perform. */
+/* The slot is sized by an invisible copy of the longest line, so nothing is
+   ever clipped at any width and the page never jumps when a short line
+   cycles in. A fixed height needs a magic number per breakpoint; this
+   doesn't, and it resizes itself if the copy changes. */
+.refrain{margin-top:var(--s5); border-top:1px solid var(--rule);
+         padding-top:var(--s3); position:relative; max-width:46ch;
+         font-size:21px; line-height:1.35}
+.refrain .ghost{display:block; visibility:hidden}
+/* The cut is driven from JS with the text swap — see the note there. */
+.refrain div{position:absolute; left:0; right:0; top:var(--s3); color:var(--head)}
+
+/* ======================================================================
+   THE DELETION — "Delete it before you build it" behaving, not explained.
+   ====================================================================== */
+.deletion{padding:var(--s6) 0; position:relative}
+.reqs{margin-top:var(--s4); border-top:1px solid var(--rule); max-width:52ch}
+.req{
+  display:flex; align-items:baseline; gap:var(--s3);
+  padding:var(--s2) 0; border-bottom:1px solid var(--rule);
+  color:var(--head); font-size:21px; position:relative;
+  transition:opacity 260ms var(--ease), color 260ms var(--ease);
+}
+.req .tag{font-size:12px; letter-spacing:.14em; color:var(--meta); text-transform:uppercase;
+          margin-left:auto; opacity:0; transition:opacity 200ms var(--ease)}
+.req.gone{color:var(--meta); opacity:.28;
+          text-decoration:line-through; text-decoration-thickness:1px}
+/* The ghost is fine as a passing state — the line is legible before it goes
+   and again every reset. It is not fine frozen, which is exactly what the
+   stopped and reduced-motion states are, so those keep the strike and drop
+   the fade. */
+[data-still] .req.gone{opacity:1}
+.req.gone .tag{opacity:1}
+.req.keep{color:var(--head)}
+.survivor{margin-top:var(--s4); font-size:19px; color:var(--body);
+          opacity:0; transition:opacity 600ms var(--ease)}
+.survivor.on{opacity:1}
+
+/* ======================================================================
+   THE ONE DEVIATION — §3, exactly one per page.
+   On a page where everything moves, the rogue is the thing that stops.
+   ====================================================================== */
+/* Direct child of body, so width:100% is already full bleed. 100vw was
+   wider than the viewport by the scrollbar and sat off-centre. */
+.rogue{
+  margin-top:var(--s6); background:var(--ink); color:var(--paper);
+  padding:var(--s6) var(--s4);
+  width:100%; position:relative; z-index:2;
+}
+[data-state="dark"] .rogue{background:var(--paper); color:var(--ink)}
+.rogue .inner{max-width:1200px; margin:0 auto; padding:0 var(--s3)}
+.rogue p{font-size:clamp(22px,3vw,34px); line-height:1.28; max-width:34ch}
+.rogue .label{color:inherit; opacity:.5}
+
+/* ---- departments ----------------------------------------------------- */
+.depts{padding:var(--s6) 0 var(--s7)}
+.dept-list{margin-top:var(--s4); border-top:1px solid var(--rule)}
+.dept{display:block; text-decoration:none; color:var(--body);
+      border-bottom:1px solid var(--rule); position:relative; overflow:hidden;
+      padding:var(--s3) var(--s3) var(--s3) 0}
+.dept h3{font-size:clamp(24px,3.4vw,40px); position:relative; z-index:1}
+.dept .does{overflow:hidden; white-space:nowrap; margin-top:var(--s1); position:relative; z-index:1}
+.dept .does span{font-family:"IBM Plex Mono",monospace; font-size:12px;
+                 letter-spacing:.14em; text-transform:uppercase; color:var(--meta);
+                 padding-right:var(--s4)}
+.dept .does .run{display:inline-block; animation:marq 46s linear infinite}
+.dept::before{content:""; position:absolute; inset:0; background:var(--head);
+              transform:translateX(-100%); transition:transform 200ms var(--ease); z-index:0}
+.dept:hover::before{transform:none}
+.dept:hover h3,.dept:hover .does span{color:var(--field)}
+
+/* ---- foot ------------------------------------------------------------ */
+/* The standing line. Subjectless, so it can sit here or under the mark. */
+footer{border-top:1px solid var(--rule); padding:var(--s4) 0 var(--s6); position:relative; z-index:1}
+footer .standing{font-size:clamp(19px,2.2vw,24px); color:var(--head)}
+
+/* ---- controls -------------------------------------------------------- */
+.controls{position:fixed; right:var(--s2); bottom:var(--s2); z-index:20;
+          display:flex; gap:var(--s1)}
+.controls button{background:var(--field); color:var(--meta); border:1px solid var(--rule);
+      padding:var(--s1) var(--s2); cursor:pointer;
+      font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em}
+/* Invert is mockup furniture. Stop is not — see WCAG note below. */
+
+/* WCAG 2.2.2 — the user can stop everything that moves. Paused, not
+   removed, so the page keeps its position rather than snapping. */
+[data-still] *,[data-still] *::before,[data-still] *::after{
+  animation-play-state:paused !important;
+}
+
+/* §8.4 — reduced motion disables entirely rather than shortening.
+   The JS honours this too; CSS alone never stopped the intervals.
+   Scoped to :not([data-motion]) so the control can override in both
+   directions. An OS default the visitor cannot argue with is not a control. */
+@media (prefers-reduced-motion:reduce){
+  html:not([data-motion]) *,
+  html:not([data-motion]) *::before,
+  html:not([data-motion]) *::after{animation:none !important; transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<!-- the machine runs behind everything, on every section -->
+<div class="machine" aria-hidden="true">
+  <div class="vline"></div><div class="vline"></div><div class="vline"></div>
+  <div class="vline"></div><div class="vline"></div>
+  <div class="hline"></div><div class="hline"></div>
+  <div class="hline"></div><div class="hline"></div>
+</div>
+
+<header>
+  <div class="wrap bar">
+    <span class="markish">ROGUE DRONES</span>
+    <nav>
+      <a href="#">Websites</a>
+      <a href="#">Web Applications</a>
+      <a href="#">AI &amp; Automation</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="label">Dunedin, Aotearoa New Zealand</span>
+    <h1 class="statement">Hand over the drone work.</h1>
+    <p class="sub">Do the part only you can do.</p>
+    <!-- The cycler shows one line at a time; a reader gets all five at once.
+         The ghost is the longest line and it only reserves the height. -->
+    <div class="refrain">
+      <span class="ghost" aria-hidden="true">It runs when the volunteer who set it up moves to Australia.</span>
+      <div id="refrain" aria-hidden="true">It runs while you're asleep.</div>
+    </div>
+    <p class="sr-only">It runs while you're asleep. It runs when you stop
+    answering emails. It runs when the funding round falls over.
+    It runs when the volunteer who set it up moves to Australia. It runs.</p>
+  </div>
+</section>
+
+<div class="band">
+  <span class="sr-only">Always on a mission</span>
+  <div class="run" id="motto" aria-hidden="true"></div>
+</div>
+
+<section class="deletion">
+  <div class="wrap">
+    <h2 style="font-size:clamp(26px,3.6vw,40px)">Delete it before you build it.</h2>
+    <div class="reqs" id="reqs">
+      <div class="req">A login for every staff member<span class="tag" aria-hidden="true">deleted</span></div>
+      <div class="req">A weekly report<span class="tag" aria-hidden="true">deleted</span></div>
+      <div class="req">A form that emails the office<span class="tag" aria-hidden="true">deleted</span></div>
+      <div class="req">An approval step<span class="tag" aria-hidden="true">deleted</span></div>
+      <div class="req">A spreadsheet everyone edits<span class="tag" aria-hidden="true">deleted</span></div>
+      <div class="req">Somewhere to put the photos<span class="tag" aria-hidden="true">deleted</span></div>
+    </div>
+    <p class="survivor" id="survivor">One of those was real. We charge for finding out which, and it is
+    the cheapest part of the job.</p>
+  </div>
+</section>
+
+<div class="band slow rev">
+  <span class="sr-only">Free people upwards</span>
+  <div class="run" id="band2" aria-hidden="true"></div>
+</div>
+
+<!-- THE ONE DEVIATION. It does not move. -->
+<div class="rogue">
+  <div class="inner">
+    <span class="label">We will say this to your face</span>
+    <p style="margin-top:var(--s3)">Most people asking for a website need three pages and a contact form.
+    If that's you, we'll tell you that, and it'll cost you what three pages and a contact form should cost.</p>
+  </div>
+</div>
+
+<section class="depts">
+  <div class="wrap">
+    <h2 class="sr-only">Departments</h2>
+    <div class="dept-list">
+      <!-- Crawls are ambient, and ambient carries no information (§4 rule 2),
+           so they stay out of the link's accessible name. -->
+      <a class="dept" href="#">
+        <h3>Websites</h3>
+        <div class="does" aria-hidden="true"><span class="run" id="d1"></span></div>
+      </a>
+      <a class="dept" href="#">
+        <h3>Web Applications</h3>
+        <div class="does" aria-hidden="true"><span class="run" id="d2"></span></div>
+      </a>
+      <a class="dept" href="#">
+        <h3>AI &amp; Automation</h3>
+        <div class="does" aria-hidden="true"><span class="run" id="d3"></span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="markish">ROGUE DRONES</span>
+    <p class="standing" style="margin-top:var(--s2)">Built to keep running.</p>
+  </div>
+</footer>
+
+<div class="controls">
+  <button id="stop" type="button">Stop motion</button>
+  <button id="flip" type="button">Invert</button>
+</div>
+
+<script>
+const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+// A -50% marquee only looks seamless when ONE copy already fills the track.
+// Six fixed copies of a short phrase ran out at about 1550px. Fill to the
+// widest the window can get, then double, so resizing cannot open a seam.
+const fill = (id, items) => {
+  const el = document.getElementById(id);
+  const one = items.map(t => `<span>${t}</span>`).join('');
+  const target = Math.max(el.closest('.band, .does').clientWidth, screen.width);
+  el.innerHTML = one;
+  // Counted, not while — offsetWidth reads 0 if the track is ever hidden,
+  // and an uncapped loop on that hangs the tab.
+  for (let n = 0; n < 200 && el.offsetWidth < target; n++) el.innerHTML += one;
+  el.innerHTML += el.innerHTML;
+};
+fill('motto', Array(8).fill('Always on a mission'));
+fill('band2', Array(6).fill('Free people upwards'));
+fill('d1', ['A site you can update without ringing us','No per-seat fee','It outlives the funding round']);
+fill('d2', ["Record a sighting on your phone with no signal",'Your data, your infrastructure','Once it is up, it does not need us']);
+fill('d3', ['The admin that ate your Tuesday','Handed to something that never gets bored','You get the Tuesday back']);
+
+// One flag for both loops. The CSS media query never reached these — it only
+// ever stopped animation and transition, so the page kept mutating itself.
+let paused = still;
+
+// The refrain. §7.3 — repetition enacts the claim, so it must not stop.
+const lines = [
+  "It runs while you're asleep.",  
+  "It runs when you stop answering emails.",
+  "It runs when the funding round falls over.",
+  "It runs when the volunteer who set it up moves to Australia.",
+  "It runs."
+];
+// One clock. The blackout used to be a CSS animation on its own 2600ms cycle
+// while the swap ran on this one; starting motion restarted the animation out
+// of phase, so a line sat across a blink and read as printing twice.
+let i = 0, el = document.getElementById('refrain');
+setInterval(() => {
+  if (paused) return;
+  el.style.opacity = 0;
+  setTimeout(() => {
+    i = (i + 1) % lines.length;
+    el.textContent = lines[i];
+    el.style.opacity = 1;
+  }, 200);
+}, 2600);
+
+// The deletion. Runs on a loop whether or not it is on screen — it is the drone,
+// not a scroll trick. ponytail: fixed cadence, no easing curve worth tuning yet.
+const reqs = [...document.querySelectorAll('.req')];
+const survivor = document.getElementById('survivor');
+let k = 0;
+setInterval(() => {
+  if (paused) return;
+  if (k < reqs.length - 1) {
+    reqs[k].classList.add('gone');
+    k++;
+    if (k === reqs.length - 1) {
+      reqs[k].classList.add('keep');
+      survivor.classList.add('on');
+    }
+  } else {
+    reqs.forEach(r => r.classList.remove('gone','keep'));
+    survivor.classList.remove('on');
+    k = 0;
+  }
+}, 1100);
+
+// Stopped gets the RESOLVED state, not a frozen first frame — the deletion
+// means nothing until you can see what survived it. Starting clears it, or
+// the loop spends five ticks re-striking lines that are already struck.
+const stop = document.getElementById('stop');
+const sync = () => {
+  const r = document.documentElement;
+  r.toggleAttribute('data-still', paused);
+  r.toggleAttribute('data-motion', !paused);
+  stop.textContent = paused ? 'Start motion' : 'Stop motion';
+  el.style.opacity = 1;   // stopping mid-blink must not leave the slot blank
+  reqs.forEach((q, n) => {
+    q.classList.toggle('gone', paused && n < reqs.length - 1);
+    q.classList.toggle('keep', paused && n === reqs.length - 1);
+  });
+  survivor.classList.toggle('on', paused);
+  k = 0;
+};
+stop.onclick = () => { paused = !paused; sync(); };
+sync();
+
+document.getElementById('flip').onclick = () => {
+  const r = document.documentElement;
+  r.dataset.state = r.dataset.state === 'dark' ? 'light' : 'dark';
+};
+</script>
+</body>
+</html>

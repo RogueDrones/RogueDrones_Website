@@ -141,11 +141,17 @@ by both available definitions at once.
 
 ### Reference implementation
 
-`docs/mockups/home-02.html` is the working demonstration, committed at `92ea29a`. It is a
-mockup and not the build: fonts are not self-hosted in it, the logo is a text stand-in, and
-its copy below the hero is Claude-written. **The motion in it is the specification.** Where
-this document and that file disagree about motion, the file is right and this document should
-be corrected.
+`docs/mockups/home-03.html` is the working demonstration. It is a mockup and not the build:
+fonts are not self-hosted in it, the logo is a text stand-in, and its copy below the hero is
+Claude-written. **The motion in it is the specification.** Where this document and that file
+disagree about motion, the file is right and this document should be corrected.
+
+`home-02.html`, committed at `92ea29a`, is superseded and kept unedited as the record. Do not
+build from it: it ignores `prefers-reduced-motion` in JS, has no pause control, opens a visible
+seam in the second band above ~1550px, and clips the longest refrain line. `home-03` fixes
+those and adds the accessibility work the rules in this section implied but never got.
+`docs/mockups/README.md` holds the full account, including the two open decisions it leaves for
+Phil and the reduced-motion setting that makes either file look dead on his machine.
 
 ---
 
