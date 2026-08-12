@@ -182,10 +182,10 @@ The mono is not decoration. It is the machine register — the drone note (§3) 
 
 | Role | Size | Line height | Tracking | Weight | Case |
 |---|---|---|---|---|---|
-| Display | `clamp(2.25rem, 5vw, 4rem)` | 1.05 | −0.02em | 400 | sentence |
-| H1 | `clamp(1.75rem, 3.2vw, 2.75rem)` | 1.10 | −0.018em | 400 | sentence |
+| Display | `clamp(2.25rem, 5vw, 4rem)` | 1.05 | −0.02em | 500 | sentence |
+| H1 | `clamp(1.75rem, 3.2vw, 2.75rem)` | 1.10 | −0.018em | 500 | sentence |
 | H2 (tracked caps) | 0.8125rem / 13px | 1.4 | 0.2em | 500 | UPPER |
-| H3 | 1.25rem / 20px | 1.3 | −0.01em | 400 | sentence |
+| H3 | 1.25rem / 20px | 1.3 | −0.01em | 500 | sentence |
 | Body | 1.0625rem / 17px | 1.62 | 0 | 400 | sentence |
 | Body small | 0.9375rem / 15px | 1.55 | 0 | 400 | sentence |
 | Mono label | 0.6875rem / 11px | 1.4 | 0.16em | 400 | UPPER |
@@ -197,7 +197,18 @@ The mono is not decoration. It is the machine register — the drone note (§3) 
 
 **Nothing on the site is bold except the wordmark, and the wordmark is artwork.**
 
-Headings are weight 400. 500 is permitted only for tracked caps at 13px, where the letterforms need it to hold. 600 and 700 do not exist in this system. This is where "confident and quiet" is actually won or lost — the temptation to bold a heading will recur, and the answer is space, not weight.
+Headings are weight 500. Body, mono and every other role is 400. 600 and 700 do not exist in
+this system, and bold is not reachable by any route — 500 is the ceiling and the wordmark is
+the only thing on the page that looks heavier, because it is a drawing.
+
+This is where "confident and quiet" is actually won or lost. The temptation to reach for 600
+will recur, and the answer is space, not weight.
+
+**Amended 2026-08-12 at Phil's instruction.** This section previously set headings at 400 and
+reserved 500 for 13px tracked caps only. `home-03.html` was built to 400, Phil compared the two
+and chose 500, so the rule follows the artwork rather than the other way round. The §6.3 scale
+table moved with it. Read "headings are 500" as the rule and not as permission — a spec that
+allows either decides nothing, and §1 says this document is written as rules.
 
 ### 6.5 Tracked caps carry the logo's voice
 
