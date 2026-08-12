@@ -295,7 +295,28 @@ when it feels right.
 - [ ] Every file listed in §3 as deleted is gone from the repo
 - [ ] The site builds and deploys to Cloudflare Pages with no second deploy path present
 
-Eleven lines, each either true or false by looking. When they are all true, the workstream
+### WCAG 2.1 AA — the five criteria this design can actually fail
+
+Added 2026-08-12. WCAG is the accessibility standard that council and government procurement
+references by name, and that funders ask conservation groups about — so for this client base it
+is a commercial line as much as a decent one. Most of AA is unreachable by a site this plain.
+These five are not, and four of them are consequences of §4 rather than of the brand.
+
+- [ ] **2.2.2 Pause, Stop, Hide** — every page carries an on-page control that stops all
+      ambient motion, present whether or not the operating system asks for reduced motion. An
+      OS setting the visitor cannot argue with does not satisfy this.
+- [ ] **1.4.3 Contrast** — no text below 4.5:1 against its own background, and nothing is left
+      permanently faded. Brand spec §5.4 settles the tokens; `opacity` is the way round it and
+      a frozen animation is where it happens.
+- [ ] **2.4.7 Focus Visible** — every link and control shows focus on keyboard, and it is a
+      rule appearing per brand spec §8.4 rather than a browser default.
+- [ ] **2.1.1 Keyboard** — every link and control is reachable and operable by keyboard alone,
+      in the order the page reads.
+- [ ] **1.4.10 Reflow** — no horizontal scroll at 320px wide. `overflow-x:hidden` hides a
+      failure rather than fixing one; the marquees and the full-bleed deviation are where this
+      breaks.
+
+Sixteen lines, each either true or false by looking. When they are all true, the workstream
 closes and presentation is not reopened for taste.
 
 ---
