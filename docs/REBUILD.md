@@ -32,7 +32,7 @@ later ones read from earlier ones.
 |---|---|---|---|
 | 1 | **Identity** | Marks, colour, type, form, the two mechanisms | **Spec approved** — review owed |
 | 2 | **Language** | Purpose, vision, mission, values, motto, the words the business uses | **Closed 2026-08-11** — all in `FOUNDATIONS.md` |
-| 3 | **Presentation** | Website, case studies, collateral, anything a stranger sees | **Current.** Not started |
+| 3 | **Presentation** | Website, case studies, collateral, anything a stranger sees | **Current.** Spec written 2026-08-12 — review owed. Home mockup built |
 | 4 | **Winning work** | Positioning, how clients arrive, proposals, pricing, saying no | Not started |
 | 5 | **Client data** | Intake, what gets captured about a client and a project, where it lives | Not started |
 | 6 | **Rogue Drones' own drones** | Applying the thesis to this organisation | **Parked** — see below |
@@ -128,6 +128,10 @@ put actual client data, which must not be in a public repo.
   from it. Primary source and the reasoning behind `FOUNDATIONS.md`.
 - `docs/NEXT-SESSION.md` — session handoff. Rewritten every session.
 - `docs/superpowers/specs/` — one dated spec per workstream.
+- `docs/mockups/` — working demonstrations, with a `README.md` that is the only account of
+  what each one does and why. `home-03.html` is current; `home-02.html` is superseded and kept
+  unedited. Read the README before opening either — Phil's machine has reduced-motion on, which
+  makes both files look dead.
 - `../F500 enterprises discovering AI-legible frameworks.md` — a primer from an earlier
   thinking session. Outside the repo, unversioned, and load-bearing. It contains the
   offload-and-climb thesis that turns out to be the same idea as the kārearea in §2.4.
@@ -166,13 +170,16 @@ beats a principle that can always be pursued further.
    spec requires SVG for web use. Department lockups and the banner variant are with the
    graphic designer, who holds the brief and is swamped. Her artwork wins over the spec.
    The rebuild can proceed on the two existing states, but needs them as clean SVG.
-2. **No project or case-study content exists — but this is disputed.** No locations, no
+2. **No project or case-study content exists. Workstream 3 has now reached it.** No
    screenshots of the work, no outcomes written up, and no record of which clients can be
-   named publicly. The website's home page concept depends entirely on this, and it is
-   content rather than code. Claude's position on 2026-08-11 was that this is the only gap
-   that decays and should be collected before it rots. **Phil disagrees that it is the
-   constraint it looks like and asked for it to be taken up when workstream 3 reaches it.**
-   Ask him first rather than treating the gap as established.
+   named publicly. Phil asked on 2026-08-11 for this to be taken up when workstream 3 got
+   there rather than treated as an established blocker, and the presentation spec reached it
+   on 2026-08-12: it is now itemised in that spec's §9, where the client-naming call is
+   recorded as having a lead time and blocking §6. The home page no longer depends on it —
+   it leads with the method and shows no client work — so this blocks the three department
+   pages only. Ask Phil; he said he may have material.
 3. **The identity spec is unreviewed.** Three things in it were decided without Phil and
    flagged for pushback — `--slate-dark` as a seventh token, form borders using `--slate`
-   rather than `--silver`, and the whole of §8 (spacing scale, 12-column grid, motion).
+   rather than `--silver`, and the whole of §8 (spacing scale, 12-column grid, motion). All
+   three still stand unreviewed. Separately, §6.4 and the §6.3 scale table were amended on
+   2026-08-12 at Phil's instruction to set headings at weight 500; that one is decided.
