@@ -243,13 +243,55 @@ One per page. The same discipline as the visual deviation.
 
 ### 7.4 Approved reference copy
 
+Three of the lines below were confirmed by Phil on 2026-08-12. The hero was struck the same
+day and both its sentences went — see the note at the end of this section.
+
 **Hero**
-> Websites, web apps and automations for people the big vendors don't bother with.
-> Built in Dunedin. Built to keep running without us.
+> *Withdrawn 2026-08-12. Replacement not yet written.*
+
+**Standing line** — confirmed 2026-08-12, cut to this by Phil
+> Built to keep running.
+
+Not a hero and not a sentence that can open a page. It has no subject, which is what lets it
+go anywhere: under the mark, at the foot, on a proposal cover. Treat it as a second motto
+sitting beneath *Always on a mission*, not as copy.
+
+Two things were removed to get here and neither should come back. *Built in Dunedin* is a
+provenance claim every agency makes and it earns nothing. *Without us* explains the handover,
+which §7.1 rule 2 forbids — and the refrain in §7.3 already carries it harder with *it runs
+when we stop answering emails*, so the hero was stating it twice and stating it weakly first.
+What survives also shares a word family with that refrain, runs and running, which is §7.3
+repetition working across two elements rather than inside one.
 
 **Web Applications**
 > Most of the tools a conservation group needs already exist. They're priced for a council.
 > We build the version you can actually run — your data, your infrastructure, no per-seat fee. Once it's up, it doesn't need us.
+
+#### The withdrawn hero, and why
+
+> ~~Websites, web apps and automations for people the big vendors don't bother with.~~
+> ~~Built in Dunedin. Built to keep running without us.~~
+
+Struck 2026-08-12 at Phil's instruction. What survives of the second sentence is recorded
+above as the standing line.
+
+Two reasons, and the second is the one that generalises:
+
+1. **It opens on Rogue Drones, not on the reader.** A list of three services with a qualifier
+   attached. The three lines that Phil confirmed all open on a fact about the reader's world —
+   *most of the tools already exist*, *most people need three pages and a contact form*, *it
+   runs while you're asleep*. None of them describe the business.
+
+2. **It predates the language workstream and was never reconciled with it.** Written
+   2026-08-02; `FOUNDATIONS.md` settled *who this is for* on 2026-08-05, and the criterion
+   there is **whether the organisation can be known**, not whether vendors bothered with it.
+   Defining the client as the overlooked also contradicts §2.2 — *rogue is a position, not a
+   personality*. Outside the boundary by choice, not by having been left there.
+
+**Consequence for the rest of this section.** Everything in §7.4 and §7.3 was Claude-written
+on 2026-08-02, before purpose, mission, values and motto existed. Three of the four lines
+survived contact with Phil on 2026-08-12; treat that as the only reason to trust them, and do
+not treat the word *approved* in this heading as meaning he ever saw them.
 
 ---
 

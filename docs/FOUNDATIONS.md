@@ -96,7 +96,7 @@ has an operator, not every organisation has a team — which is the reason the w
 team", "your people" and "someone".
 
 **Why the word carries more than it looks.** A drone operates. An operator directs the drone.
-So the operator is what the climb arrives at: stop doing the drone work, run the drone that
+So the operator is what the climb arrives at: hand over the drone work, run the drone that
 does it instead. The mechanism and its destination turn out to be the same word.
 
 **No time horizon, deliberately.** A standing test applied every mission, not a target. A count
@@ -228,9 +228,10 @@ whether they are one. Add to the banned list in brand spec §7.2 at the next rev
 Settled 2026-08-11. Phil's own line, said long before most of what it compresses was written.
 
 **Why this one.** All three candidate lines are his and all three survive, but they point in
-different directions. *Stop doing the drone work* is the diagnosis, addressed to the person
-doing it. *Free people upwards* is the method, addressed to the organisation deciding. Only
-*always on a mission* names the destination, which is the job of a motto.
+different directions. *Hand over the drone work* is the diagnosis, addressed to the person
+doing it — it read *stop doing the drone work* until 2026-08-12; see below. *Free people
+upwards* is the method, addressed to the organisation deciding. Only *always on a mission*
+names the destination, which is the job of a motto.
 
 **It contains the first value exactly.** Always on a mission is what *nobody becomes idle* looks
 like from the inside, and every mission levels the operator up. Purpose, mission and value one
@@ -244,10 +245,43 @@ gained. The *a mission is a job* rule is what keeps the second meaning in place.
 capped at one person's hours. Always on *a* mission — one job, with an end and an operator —
 not permanently working. The article is load-bearing.
 
-**The other two keep their roles**, proposed and unopposed rather than settled: *stop doing the
+**The other two keep their roles**, proposed and unopposed rather than settled: *hand over the
 drone work* as the philosophy, *free people upwards* as the line aimed at organisations. *Free
 people upwards* was kept out of the values deliberately so it stays available; its content
 survives inside the first value regardless.
+
+---
+
+## The line at the top of the page
+
+> **Hand over the drone work. Do the part only you can do.**
+
+Settled 2026-08-12. Phil's line, reached in one session and cut down twice on the way.
+
+**It replaces *stop doing the drone work*, which is retired.** Same thought, and the wording is
+the whole difference. *Stop* names a cessation and stops there; the business is not about the
+work ending, it is about what the person does next. The second sentence is what *free people
+upwards* was always pointing at, with the direction supplied rather than left blank — an
+earlier draft ran *free to…* and was dropped precisely because an open ending reads as free to
+have less to do, which is the first value's failure mode, not its offer.
+
+**Why *hand over* and not *leave* or *give*.** Handover is already this file's word for the
+moment a thing transfers — *idleness is visible at handover*, in value one. It carries finality
+that *leave* does not, and it is a delegation rather than a refusal, which is what makes it
+constructive without becoming warm.
+
+**Why *the part* and not *what*.** *Do what only you can do* sits one syllable from *focus on
+what you do best*, which is flattery. *The part* is structural: it says the job divides, and
+that most of it is not yours. That is the purpose stated in a form that can be published.
+
+**It behaves rather than explains**, per brand spec §7.1 rule 2. It never says what a drone is.
+A stranger reads *drone work* as the English idiom for drudgery and gets it cold; the second
+meaning arrives when they work out what the company is called. That is the possessive rule
+doing its designed job in the position where the most strangers will meet it.
+
+**The standing line beneath it:** *Built to keep running.* Cut from the withdrawn hero on the
+same day, subjectless, and therefore able to sit under the mark, at the foot of a page or on a
+proposal cover. It is closer to a second motto than to copy. Full reasoning in brand spec §7.4.
 
 ---
 
@@ -258,3 +292,14 @@ Workstream 2 closed 2026-08-11. Everything the language workstream owed is above
 The next change to this file should be a decision that contradicts something in it, not a gap
 being filled. If a new "not written yet" list appears here, check that it is a real omission
 and not the search restarting.
+
+**Amended 2026-08-12**, and it passes that test rather than breaking it. *Stop doing the drone
+work* was retired and *hand over the drone work* replaces it, which contradicts what the file
+said rather than filling a hole it left. Three places changed: the philosophy's wording in the
+motto section, the same phrase used descriptively in the mission section, and a new section for
+the line at the top of the page. Nothing was added to a to-do list, and nothing here is
+awaiting a decision.
+
+The change came out of workstream 3 needing a headline and finding that the settled philosophy
+would not serve as one. Expect more of that shape — presentation is where the language gets
+its first real load test, and a line failing under load is a decision, not a gap.
