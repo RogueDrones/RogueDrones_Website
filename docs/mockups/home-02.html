@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en" data-state="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rogue Drones — home, mockup 02</title>
+<style>
+/* ---- Schist tokens, brand spec §5.1 ---------------------------------- */
+:root{
+  --paper:#F2F3F4; --mist:#E4E6E8; --silver:#B8BCC0;
+  --slate:#6E7378; --slate-dark:#5F6468; --basalt:#1C1F22; --ink:#0C0E10;
+  --s1:8px; --s2:16px; --s3:24px; --s4:40px; --s5:64px; --s6:104px; --s7:168px;
+  --field:var(--paper); --body:var(--basalt); --head:var(--ink);
+  --rule:var(--silver); --meta:var(--slate-dark);
+  --ease:cubic-bezier(0.2,0,0,1);
+}
+[data-state="dark"]{
+  --field:var(--ink); --body:var(--paper); --head:var(--paper);
+  --rule:var(--slate); --meta:var(--silver);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--field); color:var(--body);
+  font-family:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  font-weight:400; font-size:17px; line-height:1.5; overflow-x:hidden;
+  transition:background 400ms var(--ease), color 400ms var(--ease);
+}
+.wrap{max-width:1200px; margin:0 auto; padding:0 var(--s3); position:relative; z-index:1}
+@media(min-width:768px){ .wrap{padding:0 var(--s4)} }
+@media(min-width:1100px){ .wrap{padding:0 var(--s5)} }
+
+.mono,.label{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace}
+.label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--meta)}
+h1,h2,h3{font-weight:500; color:var(--head); letter-spacing:-0.015em}
+p{max-width:46ch}
+
+/* ======================================================================
+   THE DRONE LAYER — §3. Sustained, unvaried, keeps going whether or not
+   anyone is watching. Nothing below reacts to the user, ever.
+   ====================================================================== */
+.machine{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+
+/* vertical boundaries that drift — §8.2, column boundaries are a real thing */
+.vline{position:absolute; top:0; bottom:0; width:1px; background:var(--rule); opacity:.45}
+.vline:nth-child(1){left:8%;  animation:drift 41s linear infinite}
+.vline:nth-child(2){left:26%; animation:drift 67s linear infinite reverse}
+.vline:nth-child(3){left:50%; animation:drift 53s linear infinite}
+.vline:nth-child(4){left:74%; animation:drift 79s linear infinite reverse}
+.vline:nth-child(5){left:92%; animation:drift 59s linear infinite}
+@keyframes drift{from{transform:translateX(-9vw)} to{transform:translateX(9vw)}}
+
+/* horizontal scans, deliberately co-prime durations so they never sync */
+.hline{position:absolute; left:0; right:0; height:1px; background:var(--rule); opacity:.6}
+.hline:nth-child(6){animation:scan 13s linear infinite}
+.hline:nth-child(7){animation:scan 19s linear infinite; animation-delay:-7s}
+.hline:nth-child(8){animation:scan 29s linear infinite; animation-delay:-18s}
+.hline:nth-child(9){animation:scan 37s linear infinite; animation-delay:-3s}
+@keyframes scan{from{transform:translateY(-1px)} to{transform:translateY(100vh)}}
+
+/* ---- endless bands --------------------------------------------------- */
+/* Repetition as structure, §7.3. It is not a headline, it is a machine
+   running the motto until the tab is closed. */
+.band{
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+  overflow:hidden; white-space:nowrap; position:relative; z-index:1;
+  background:var(--field); padding:var(--s2) 0;
+}
+.band .run{display:inline-block; animation:marq 34s linear infinite}
+.band.slow .run{animation-duration:78s}
+.band.rev .run{animation-direction:reverse}
+.band span{
+  font-family:"IBM Plex Mono",monospace; font-size:13px; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--meta); padding:0 var(--s3);
+}
+.band.loud span{font-size:clamp(26px,4vw,52px); letter-spacing:.02em;
+                color:var(--head); text-transform:none; letter-spacing:-0.01em}
+@keyframes marq{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+
+/* ---- header ---------------------------------------------------------- */
+header{position:sticky; top:0; z-index:10; background:var(--field);
+       border-bottom:1px solid var(--rule)}
+.bar{display:flex; align-items:baseline; gap:var(--s3); height:64px}
+.markish{font-family:"IBM Plex Mono",monospace; font-size:14px;
+         letter-spacing:.22em; color:var(--head); font-weight:500}
+nav{margin-left:auto; display:flex; gap:var(--s3)}
+nav a{color:var(--meta); text-decoration:none; font-family:"IBM Plex Mono",monospace;
+      font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+      padding-bottom:2px; border-bottom:1px solid transparent;
+      transition:color 200ms var(--ease), border-color 200ms var(--ease)}
+nav a:hover{color:var(--head); border-bottom-color:var(--rule)}
+
+/* ---- hero ------------------------------------------------------------ */
+.hero{padding:var(--s7) 0 var(--s6); position:relative}
+/* Four words earn the room. The old hero was a sentence and had to be sized down. */
+.statement{font-size:clamp(44px,9.5vw,116px); line-height:0.98; max-width:11ch;
+           margin-bottom:var(--s4)}
+.sub{color:var(--meta); font-size:clamp(19px,2.4vw,26px); max-width:34ch}
+
+/* the refrain — §7.3, hard cut, no easing out. It does not perform. */
+.refrain{margin-top:var(--s5); border-top:1px solid var(--rule);
+         padding-top:var(--s3); height:2.6em; overflow:hidden}
+.refrain div{font-size:21px; color:var(--head); animation:cut 2600ms steps(1,end) infinite}
+@keyframes cut{0%,92%{opacity:1} 93%,100%{opacity:0}}
+
+/* ======================================================================
+   THE DELETION — "Delete it before you build it" behaving, not explained.
+   ====================================================================== */
+.deletion{padding:var(--s6) 0; position:relative}
+.reqs{margin-top:var(--s4); border-top:1px solid var(--rule); max-width:52ch}
+.req{
+  display:flex; align-items:baseline; gap:var(--s3);
+  padding:var(--s2) 0; border-bottom:1px solid var(--rule);
+  color:var(--head); font-size:21px; position:relative;
+  transition:opacity 260ms var(--ease), color 260ms var(--ease);
+}
+.req .tag{font-size:12px; letter-spacing:.14em; color:var(--meta); text-transform:uppercase;
+          margin-left:auto; opacity:0; transition:opacity 200ms var(--ease)}
+.req.gone{color:var(--meta); opacity:.28; text-decoration:line-through;
+          text-decoration-thickness:1px}
+.req.gone .tag{opacity:1}
+.req.keep{color:var(--head)}
+.survivor{margin-top:var(--s4); font-size:19px; color:var(--body);
+          opacity:0; transition:opacity 600ms var(--ease)}
+.survivor.on{opacity:1}
+
+/* ======================================================================
+   THE ONE DEVIATION — §3, exactly one per page.
+   On a page where everything moves, the rogue is the thing that stops.
+   ====================================================================== */
+.rogue{
+  margin-top:var(--s6); background:var(--ink); color:var(--paper);
+  padding:var(--s6) var(--s4);
+  width:100vw; position:relative; left:50%; margin-left:-50vw; z-index:2;
+}
+[data-state="dark"] .rogue{background:var(--paper); color:var(--ink)}
+.rogue .inner{max-width:1200px; margin:0 auto; padding:0 var(--s3)}
+.rogue p{font-size:clamp(22px,3vw,34px); line-height:1.28; max-width:34ch}
+.rogue .label{color:inherit; opacity:.5}
+
+/* ---- departments ----------------------------------------------------- */
+.depts{padding:var(--s6) 0 var(--s7)}
+.dept-list{margin-top:var(--s4); border-top:1px solid var(--rule)}
+.dept{display:block; text-decoration:none; color:var(--body);
+      border-bottom:1px solid var(--rule); position:relative; overflow:hidden;
+      padding:var(--s3) var(--s3) var(--s3) 0}
+.dept h3{font-size:clamp(24px,3.4vw,40px); position:relative; z-index:1}
+.dept .does{overflow:hidden; white-space:nowrap; margin-top:var(--s1); position:relative; z-index:1}
+.dept .does span{font-family:"IBM Plex Mono",monospace; font-size:12px;
+                 letter-spacing:.14em; text-transform:uppercase; color:var(--meta);
+                 padding-right:var(--s4)}
+.dept .does .run{display:inline-block; animation:marq 46s linear infinite}
+.dept::before{content:""; position:absolute; inset:0; background:var(--head);
+              transform:translateX(-100%); transition:transform 200ms var(--ease); z-index:0}
+.dept:hover::before{transform:none}
+.dept:hover h3,.dept:hover .does span{color:var(--field)}
+
+/* ---- foot ------------------------------------------------------------ */
+/* The standing line. Subjectless, so it can sit here or under the mark. */
+footer{border-top:1px solid var(--rule); padding:var(--s4) 0 var(--s6); position:relative; z-index:1}
+footer .standing{font-size:clamp(19px,2.2vw,24px); color:var(--head)}
+
+/* ---- mockup furniture — not part of the design ----------------------- */
+#flip{position:fixed; right:var(--s2); bottom:var(--s2); z-index:20;
+      background:var(--field); color:var(--meta); border:1px solid var(--rule);
+      padding:var(--s1) var(--s2); cursor:pointer;
+      font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em}
+
+/* §8.4 — reduced motion disables entirely rather than shortening */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important; transition:none !important}
+  .refrain{height:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- the machine runs behind everything, on every section -->
+<div class="machine" aria-hidden="true">
+  <div class="vline"></div><div class="vline"></div><div class="vline"></div>
+  <div class="vline"></div><div class="vline"></div>
+  <div class="hline"></div><div class="hline"></div>
+  <div class="hline"></div><div class="hline"></div>
+</div>
+
+<header>
+  <div class="wrap bar">
+    <span class="markish">ROGUE DRONES</span>
+    <nav>
+      <a href="#">Websites</a>
+      <a href="#">Web Applications</a>
+      <a href="#">AI &amp; Automation</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="label">Dunedin, Aotearoa New Zealand</span>
+    <h1 class="statement">Hand over the drone work.</h1>
+    <p class="sub">Do the part only you can do.</p>
+    <div class="refrain"><div id="refrain">It runs while you're asleep.</div></div>
+  </div>
+</section>
+
+<div class="band"><div class="run" id="motto"></div></div>
+
+<section class="deletion">
+  <div class="wrap">
+    <h2 style="font-size:clamp(26px,3.6vw,40px)">Delete it before you build it.</h2>
+    <div class="reqs" id="reqs">
+      <div class="req">A login for every staff member<span class="tag">deleted</span></div>
+      <div class="req">A weekly report<span class="tag">deleted</span></div>
+      <div class="req">A form that emails the office<span class="tag">deleted</span></div>
+      <div class="req">An approval step<span class="tag">deleted</span></div>
+      <div class="req">A spreadsheet everyone edits<span class="tag">deleted</span></div>
+      <div class="req">Somewhere to put the photos<span class="tag">deleted</span></div>
+    </div>
+    <p class="survivor" id="survivor">One of those was real. We charge for finding out which, and it is
+    the cheapest part of the job.</p>
+  </div>
+</section>
+
+<div class="band slow rev"><div class="run" id="band2"></div></div>
+
+<!-- THE ONE DEVIATION. It does not move. -->
+<div class="rogue">
+  <div class="inner">
+    <span class="label">We will say this to your face</span>
+    <p style="margin-top:var(--s3)">Most people asking for a website need three pages and a contact form.
+    If that's you, we'll tell you that, and it'll cost you what three pages and a contact form should cost.</p>
+  </div>
+</div>
+
+<section class="depts">
+  <div class="wrap">
+    <div class="dept-list">
+      <a class="dept" href="#">
+        <h3>Websites</h3>
+        <div class="does"><span class="run" id="d1"></span></div>
+      </a>
+      <a class="dept" href="#">
+        <h3>Web Applications</h3>
+        <div class="does"><span class="run" id="d2"></span></div>
+      </a>
+      <a class="dept" href="#">
+        <h3>AI &amp; Automation</h3>
+        <div class="does"><span class="run" id="d3"></span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="markish">ROGUE DRONES</span>
+    <p class="standing" style="margin-top:var(--s2)">Built to keep running.</p>
+  </div>
+</footer>
+
+<button id="flip" type="button">Invert</button>
+
+<script>
+// Marquee content is duplicated so the -50% translate loops seamlessly.
+const fill = (id, items) => {
+  const html = items.map(t => `<span>${t}</span>`).join('');
+  document.getElementById(id).innerHTML = html + html;
+};
+fill('motto', Array(8).fill('Always on a mission'));
+fill('band2', Array(6).fill('Free people upwards'));
+fill('d1', ['A site you can update without ringing us','No per-seat fee','It outlives the funding round']);
+fill('d2', ["Record a sighting on your phone with no signal",'Your data, your infrastructure','Once it is up, it does not need us']);
+fill('d3', ['The admin that ate your Tuesday','Handed to something that never gets bored','You get the Tuesday back']);
+
+// The refrain. §7.3 — repetition enacts the claim, so it must not stop.
+const lines = [
+  "It runs while you're asleep.",
+  "It runs when the funding round falls over.",
+  "It runs when the volunteer who set it up moves to Australia.",
+  "It runs when we stop answering emails.",
+  "It runs."
+];
+let i = 0, el = document.getElementById('refrain');
+setInterval(() => { i = (i + 1) % lines.length; el.textContent = lines[i]; }, 2600);
+
+// The deletion. Runs on a loop whether or not it is on screen — it is the drone,
+// not a scroll trick. ponytail: fixed cadence, no easing curve worth tuning yet.
+const reqs = [...document.querySelectorAll('.req')];
+const survivor = document.getElementById('survivor');
+let k = 0;
+setInterval(() => {
+  if (k < reqs.length - 1) {
+    reqs[k].classList.add('gone');
+    k++;
+    if (k === reqs.length - 1) {
+      reqs[k].classList.add('keep');
+      survivor.classList.add('on');
+    }
+  } else {
+    reqs.forEach(r => r.classList.remove('gone','keep'));
+    survivor.classList.remove('on');
+    k = 0;
+  }
+}, 1100);
+
+document.getElementById('flip').onclick = () => {
+  const r = document.documentElement;
+  r.dataset.state = r.dataset.state === 'dark' ? 'light' : 'dark';
+};
+</script>
+</body>
+</html>
